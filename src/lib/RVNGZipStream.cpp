@@ -17,6 +17,7 @@
  * applicable instead of those above.
  */
 
+#include <algorithm>
 #include <cassert>
 #include <string>
 #include <string.h>
