@@ -1192,15 +1192,15 @@ void librevenge::IStorage::load()
 	if (!m_header.valid_signature())
 		return;
 
-	// sanity checks
-	m_result = librevenge::Storage::BadOLE;
-	if (!m_header.valid(getLength(m_input))) return;
-	if (m_header.m_threshold != 4096) return;
-
 	// important block size
 	m_header.compute_block_size();
 	m_bbat.m_blockSize = m_header.m_size_bbat;
 	m_sbat.m_blockSize = m_header.m_size_sbat;
+
+	// sanity checks
+	m_result = librevenge::Storage::BadOLE;
+	if (!m_header.valid(getLength(m_input))) return;
+	if (m_header.m_threshold != 4096) return;
 
 	// find blocks allocated to store big bat
 	// the first 109 blocks are in header, the rest in meta bat
