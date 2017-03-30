@@ -478,7 +478,7 @@ RVNGInputStream *RVNGZipStream::getSubstream(RVNGInputStream *input, const char 
 				break;
 			// TODO: return partial result on Z_BUF_ERROR/Z_DATA_ERROR?
 			default:
-				data.clear();
+				strm.total_out = 0; // abandon partial result
 			// fall-through intended
 			case Z_STREAM_END:
 				done = true;
