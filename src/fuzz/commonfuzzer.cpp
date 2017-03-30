@@ -60,11 +60,13 @@ void testStructuredStream(librevenge::RVNGInputStream &input)
 	for (unsigned i = 0, ssc = input.subStreamCount(); i < ssc; ++i)
 	{
 		boost::scoped_ptr<librevenge::RVNGInputStream> subStream(input.getSubStreamById(i));
-		testRead(*subStream, buf);
+		if (bool(subStream))
+			testRead(*subStream, buf);
 
 		const char *const name = input.subStreamName(i);
 		boost::scoped_ptr<librevenge::RVNGInputStream> namedSubStream(input.getSubStreamByName(name));
-		testRead(*namedSubStream, buf);
+		if (bool(namedSubStream))
+			testRead(*namedSubStream, buf);
 	}
 }
 
