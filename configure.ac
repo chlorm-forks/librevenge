@@ -303,6 +303,16 @@ AS_IF([test "x$enable_pretty_printers" != "xno"],
 )
 AC_SUBST([GDBDATADIR])
 
+# =======
+# Fuzzers
+# =======
+AC_ARG_ENABLE([fuzzers],
+       [AS_HELP_STRING([--disable-fuzzers], [Build fuzzer(s)])],
+       [enable_fuzzers="$enableval"],
+       [enable_fuzzers=no]
+)
+AM_CONDITIONAL(BUILD_FUZZERS, [test "x$enable_fuzzers" = "xyes"])
+
 # =====================
 # Prepare all .in files
 # =====================
@@ -314,6 +324,7 @@ data/gdb/auto-load/Makefile
 data/gdb/auto-load/librevenge-$RVNG_MAJOR_VERSION.$RVNG_MINOR_VERSION.py:data/gdb/auto-load/librevenge.py.in
 data/gdb/auto-load/librevenge-stream-$RVNG_MAJOR_VERSION.$RVNG_MINOR_VERSION.py:data/gdb/auto-load/librevenge-stream.py.in
 src/Makefile
+src/fuzz/Makefile
 src/lib/Makefile
 src/lib/librevenge.rc
 src/lib/librevenge-generators.rc
@@ -341,6 +352,7 @@ AC_MSG_NOTICE([
 Build configuration:
 	debug:           ${enable_debug}
 	docs:            ${build_docs}
+	fuzzers:         ${enable_fuzzers}
 	tests:           ${enable_tests}
 	generators:      ${enable_generators}
 	streams:         ${enable_streams}
