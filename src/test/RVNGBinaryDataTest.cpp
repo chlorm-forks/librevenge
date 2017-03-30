@@ -224,23 +224,23 @@ void RVNGBinaryDataTest::testStream()
 	input->seek(0, RVNG_SEEK_SET);
 	CPPUNIT_ASSERT(NULL == input->read(0, numBytesRead));
 	CPPUNIT_ASSERT_EQUAL((unsigned long) 0, numBytesRead);
-	CPPUNIT_ASSERT_EQUAL((long) 0 , input->tell());
+	CPPUNIT_ASSERT_EQUAL((long) 0, input->tell());
 	CPPUNIT_ASSERT(NULL != input->read(1, numBytesRead));
-	CPPUNIT_ASSERT_EQUAL((long) 1 , input->tell());
+	CPPUNIT_ASSERT_EQUAL((long) 1, input->tell());
 
 	input->seek(0, RVNG_SEEK_SET);
 	CPPUNIT_ASSERT(NULL != input->read(50, numBytesRead));
-	CPPUNIT_ASSERT_EQUAL((long) 8 , input->tell());
+	CPPUNIT_ASSERT_EQUAL((long) 8, input->tell());
 
 	// test seek(), tell(), isEnd()
 	input->seek(1, RVNG_SEEK_SET);
-	CPPUNIT_ASSERT_EQUAL((long) 1 , input->tell());
+	CPPUNIT_ASSERT_EQUAL((long) 1, input->tell());
 
 	input->seek(0, RVNG_SEEK_SET);
-	CPPUNIT_ASSERT_EQUAL((long) 0 , input->tell());
+	CPPUNIT_ASSERT_EQUAL((long) 0, input->tell());
 
 	input->seek(8, RVNG_SEEK_SET);
-	CPPUNIT_ASSERT_EQUAL((long) 8 , input->tell());
+	CPPUNIT_ASSERT_EQUAL((long) 8, input->tell());
 
 	input->seek(-1, RVNG_SEEK_SET);
 	CPPUNIT_ASSERT_EQUAL((long) 0, input->tell());
