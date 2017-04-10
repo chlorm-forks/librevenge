@@ -90,6 +90,7 @@ private:
 	CPPUNIT_TEST(testAppend);
 	CPPUNIT_TEST(testAppendEscapedXML);
 	CPPUNIT_TEST(testClear);
+	CPPUNIT_TEST(testInvalid);
 	CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -97,6 +98,7 @@ private:
 	void testAppend();
 	void testAppendEscapedXML();
 	void testClear();
+	void testInvalid();
 };
 
 void RVNGStringTest::setUp()
@@ -185,6 +187,38 @@ void RVNGStringTest::testClear()
 
 	str.append('a');
 	str.clear();
+	CPPUNIT_ASSERT_EQUAL(0ul, str.size());
+	CPPUNIT_ASSERT_EQUAL(0, str.len());
+}
+
+void RVNGStringTest::testInvalid()
+{
+	const char input[] = "hello\xfd";
+	const size_t len = RVNG_NUM_ELEMENTS(input) - 1;
+
+	// construction from a C string
+	RVNGString str(input);
+	CPPUNIT_ASSERT_EQUAL(static_cast<unsigned long>(len - 1), str.size());
+	CPPUNIT_ASSERT_EQUAL(int(len - 1), str.len());
+	CPPUNIT_ASSERT(equal(input, input + len - 1, str.cstr()));
+
+	// assignment from a C string
+	str.clear();
+	str = input;
+	CPPUNIT_ASSERT_EQUAL(static_cast<unsigned long>(len - 1), str.size());
+	CPPUNIT_ASSERT_EQUAL(int(len - 1), str.len());
+	CPPUNIT_ASSERT(equal(input, input + len - 1, str.cstr()));
+
+	// appending a C string
+	str.clear();
+	str.append(input);
+	CPPUNIT_ASSERT_EQUAL(static_cast<unsigned long>(len - 1), str.size());
+	CPPUNIT_ASSERT_EQUAL(int(len - 1), str.len());
+	CPPUNIT_ASSERT(equal(input, input + len - 1, str.cstr()));
+
+	// appending a char
+	str.clear();
+	str.append('\xfa');
 	CPPUNIT_ASSERT_EQUAL(0ul, str.size());
 	CPPUNIT_ASSERT_EQUAL(0, str.len());
 }
