@@ -87,6 +87,8 @@ public:
 		return (unsigned long)m_buf.size();
 	}
 	void appendEscapedXML(const char *s, const unsigned long sz);
+	void append(const char *s);
+	void append(char c);
 	std::string m_buf;
 };
 
@@ -133,6 +135,44 @@ void RVNGStringImpl::appendEscapedXML(const char *s, const unsigned long sz)
 	}
 }
 
+void RVNGStringImpl::append(const char *s)
+{
+	assert(s);
+
+	// Find the true end of the string (one past the last code unit of
+	// the last complete UTF-8 character)
+	const char *v = s;
+	const char *p = s;
+	const char *u = s;
+	while (*p)
+	{
+		u = librvng_utf8_next_char(u);
+		while (p < u && *p) ++p;
+		if (p == u)
+			v = u;
+	}
+
+	if (*v)
+	{
+		RVNG_DEBUG_MSG(("RVNGStringImpl::append: the string is not a valid UTF-8 string\n"));
+	}
+
+	if (v > s)
+		m_buf.append(s, v - s);
+}
+
+void RVNGStringImpl::append(char c)
+{
+	if (librvng_utf8_skip_data[static_cast<unsigned char>(c)] == 1)
+	{
+		m_buf.append(1, c);
+	}
+	else
+	{
+		RVNG_DEBUG_MSG(("RVNGStringImpl::append: '%c' is not a valid 1-byte UTF-8 char\n", c));
+	}
+}
+
 RVNGString::~RVNGString()
 {
 	delete m_stringImpl;
@@ -154,7 +194,7 @@ RVNGString::RVNGString(const char *str) :
 	m_stringImpl(new RVNGStringImpl)
 {
 	if (str)
-		m_stringImpl->m_buf = str;
+		m_stringImpl->append(str);
 }
 
 RVNGString RVNGString::escapeXML(const RVNGString &s)
@@ -216,12 +256,12 @@ void RVNGString::append(const RVNGString &s)
 void RVNGString::append(const char *s)
 {
 	if (s)
-		m_stringImpl->m_buf.append(s);
+		m_stringImpl->append(s);
 }
 
 void RVNGString::append(const char c)
 {
-	m_stringImpl->m_buf.append(1, c);
+	m_stringImpl->append(c);
 }
 
 void RVNGString::appendEscapedXML(const RVNGString &s)
@@ -263,7 +303,7 @@ RVNGString &RVNGString::operator=(const RVNGString &stringBuf)
 RVNGString &RVNGString::operator=(const char *s)
 {
 	if (s)
-		m_stringImpl->m_buf = s;
+		m_stringImpl->append(s);
 	else
 		clear();
 	return *this;
