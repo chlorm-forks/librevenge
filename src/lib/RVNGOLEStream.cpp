@@ -774,7 +774,11 @@ void librevenge::Header::load(const unsigned char *buffer, unsigned long size)
 		return;
 	m_revision = (unsigned) readU16(buffer+0x18);
 	m_shift_bbat      = (unsigned int) readU16(buffer + 0x1e);
+	if (m_shift_bbat > 31)
+		m_shift_bbat = 31;
 	m_shift_sbat      = (unsigned int) readU16(buffer + 0x20);
+	if (m_shift_sbat > 31)
+		m_shift_sbat = 31;
 	m_num_bat      = (unsigned int) readU32(buffer + 0x2c);
 	m_start_dirent = (unsigned int) readU32(buffer + 0x30);
 	m_threshold    = (unsigned int) readU32(buffer + 0x38);
