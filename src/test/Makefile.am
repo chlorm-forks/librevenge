@@ -17,6 +17,7 @@ test_SOURCES = \
 	RVNGBinaryDataTest.cpp \
 	RVNGDirectoryStreamTest.cpp \
 	RVNGOLEStreamTest.cpp \
+	RVNGPropertyListTest.cpp \
 	RVNGStreamTest.cpp \
 	RVNGStringIterTest.cpp \
 	RVNGStringTest.cpp \
