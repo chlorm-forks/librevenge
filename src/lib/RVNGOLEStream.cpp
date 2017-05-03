@@ -1218,7 +1218,7 @@ void librevenge::IStorage::load()
 		std::vector<unsigned char> buffer2(m_bbat.m_blockSize);
 		unsigned k = 109;
 		unsigned long sector;
-		for (unsigned r = 0; r < m_header.m_num_mbat; r++)
+		for (unsigned r = 0; r < m_header.m_num_mbat && k > 0; r++)
 		{
 			if (r == 0) // 1st meta bat location is in file header.
 				sector = m_header.m_start_mbat;
