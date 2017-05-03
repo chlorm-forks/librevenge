@@ -26,8 +26,6 @@
 #include <sstream>
 #include <vector>
 
-#include <boost/lexical_cast.hpp>
-
 #include "RVNGHTMLTextTableStyle.h"
 #include "RVNGHTMLTextTextStyle.h"
 
@@ -472,7 +470,7 @@ void RVNGHTMLTextGenerator::openParagraph(const RVNGPropertyList &propList)
 	{
 		const int level = outlineLevel->getInt();
 		if ((0 < level) && (7 > level))
-			m_impl->m_currentParaElement = "h" + boost::lexical_cast<std::string>(level);
+			m_impl->m_currentParaElement = "h" + std::to_string(level);
 	}
 
 	m_impl->output(false) << "<" << m_impl->m_currentParaElement

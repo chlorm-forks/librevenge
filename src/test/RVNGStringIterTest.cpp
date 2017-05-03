@@ -14,7 +14,7 @@
 #ifndef RVNGSTRINGITERTEST_H
 #define RVNGSTRINGITERTEST_H
 
-#include <boost/lexical_cast.hpp>
+#include <cassert>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -50,7 +50,7 @@ void implTestIter(const string &msg, const char *chars[], const std::size_t coun
 
 	for (std::size_t i = 1; i < count - 1; ++i)
 	{
-		const string pos(boost::lexical_cast<string>(i));
+		const string pos(std::to_string(i));
 		CPPUNIT_ASSERT_MESSAGE(msg + ": " + "not at end at char pos " + pos, !iter.last());
 		CPPUNIT_ASSERT_EQUAL_MESSAGE(msg + ": " + "deref. at char pos " + pos, string(chars[i]), string(iter()));
 		CPPUNIT_ASSERT_MESSAGE(msg + ": " + "can advance at char pos " + pos, iter.next());
