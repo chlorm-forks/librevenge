@@ -22,7 +22,6 @@
 #include <boost/archive/iterators/base64_from_binary.hpp>
 #include <boost/archive/iterators/remove_whitespace.hpp>
 #include <boost/archive/iterators/transform_width.hpp>
-#include <boost/range/iterator_range.hpp>
 
 #include <memory>
 #include <vector>
