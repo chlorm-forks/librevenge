@@ -22,7 +22,9 @@
 #include <map>
 #include <string>
 #include <utility>
-#include <boost/spirit/include/classic.hpp>
+
+#include <boost/spirit/include/qi.hpp>
+
 #include <librevenge/librevenge.h>
 
 namespace
@@ -30,90 +32,57 @@ namespace
 
 bool findDouble(const librevenge::RVNGString &str, double &res, librevenge::RVNGUnit &unit)
 {
-	using namespace ::boost::spirit::classic;
-
 	if (str.empty())
 		return false;
 
-	unit = librevenge::RVNG_GENERIC;
-	bool unitIsCM=false, unitIsMM=false;
-	if (!parse(str.cstr(),
-	           //  Begin grammar
-	           (
-	               real_p[assign_a(res)] >>
-	               (
-	                   str_p("pt")[assign_a(unit,librevenge::RVNG_POINT)]
-	                   |
-	                   str_p("in")[assign_a(unit,librevenge::RVNG_INCH)]
-	                   |
-	                   str_p("%")[assign_a(unit,librevenge::RVNG_PERCENT)]
-	                   |
-	                   str_p("*")[assign_a(unit,librevenge::RVNG_TWIP)]
-	                   |
-	                   str_p("cm")[assign_a(unitIsCM,true)]
-	                   |
-	                   str_p("mm")[assign_a(unitIsMM,true)]
-	                   |
-	                   eps_p
-	               )
-	           ) >> end_p,
-	           //  End grammar
-	           space_p).full)
+	const char *first = str.cstr();
+	const char *const last = first + str.size();
+
+	using namespace boost::spirit::qi;
+	using namespace librevenge;
+	double ratio = 1;
+	symbols<char, RVNGUnit> simpleUnit;
+	simpleUnit.add("pt", RVNG_POINT)("in", RVNG_INCH)("*", RVNG_TWIP);
+	if (phrase_parse(first, last,
+	                 //  Begin grammar
+	                 (
+	                     double_ >> simpleUnit
+	                     | double_ >> "%" >> attr(RVNG_PERCENT) >> attr(100.0)
+	                     | double_ >> "cm" >> attr(RVNG_INCH) >> attr(2.54)
+	                     | double_ >> "mm" >> attr(RVNG_INCH) >> attr(25.4)
+	                     | double_ >> attr(RVNG_GENERIC)
+	                 ),
+	                 //  End grammar
+	                 space,
+	                 res, unit, ratio))
 	{
-		return false;
+		res /= ratio;
+		return first == last;
 	}
 
-	if (unit == librevenge::RVNG_PERCENT)
-		res /= 100.0;
-	else if (unitIsCM)
-	{
-		res *= 0.393700787;
-		unit=librevenge::RVNG_INCH;
-	}
-	else if (unitIsMM)
-	{
-		res *= 0.0393700787;
-		unit=librevenge::RVNG_INCH;
-	}
-	return true;
+	return false;
 }
 
 bool findInt(const librevenge::RVNGString &str, int &res)
 {
-	using namespace ::boost::spirit::classic;
-
 	if (str.empty())
 		return false;
 
-	return parse(str.cstr(),
-	             //  Begin grammar
-	             (
-	                 int_p[assign_a(res)]
-	             ) >> end_p,
-	             //  End grammar
-	             space_p).full;
+	const char *first = str.cstr();
+	const char *const last = first + str.size();
+	using namespace boost::spirit::qi;
+	return phrase_parse(first, last, int_, space, res) && first == last;
 }
 
 bool findBool(const librevenge::RVNGString &str, bool &res)
 {
-	using namespace ::boost::spirit::classic;
-
 	if (str.empty())
 		return false;
 
-	return parse(str.cstr(),
-	             //  Begin grammar
-	             (
-	                 str_p("true")[assign_a(res,true)]
-	                 |
-	                 str_p("false")[assign_a(res,false)]
-	                 |
-	                 str_p("TRUE")[assign_a(res,true)]
-	                 |
-	                 str_p("FALSE")[assign_a(res,false)]
-	             ) >> end_p,
-	             //  End grammar
-	             space_p).full;
+	const char *first = str.cstr();
+	const char *const last = first + str.size();
+	using namespace boost::spirit::qi;
+	return phrase_parse(first, last, no_case[bool_], space, res) && first == last;
 }
 
 } // anonymous namespace

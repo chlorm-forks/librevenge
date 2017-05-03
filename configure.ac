@@ -207,7 +207,8 @@ AC_CHECK_HEADERS(
 		boost/range/iterator_range.hpp \
 		boost/scoped_ptr.hpp \
 		boost/shared_ptr.hpp \
-		boost/spirit/include/classic.hpp,
+		boost/spirit/include/qi.hpp \
+		,
 	[],
 	[AC_MSG_ERROR([Required boost headers not found.])],
 	[]
