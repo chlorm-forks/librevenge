@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
 
 #include <assert.h>
+#include <memory>
 #include <stdio.h>
-#include <boost/scoped_ptr.hpp>
 #include <librevenge-stream/librevenge-stream.h>
 
 namespace
@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
 		const char *const name = input.subStreamName(i);
 		assert(input.existsSubStream(name));
 
-		boost::scoped_ptr<librevenge::RVNGInputStream> subStream(input.getSubStreamById(i));
-		boost::scoped_ptr<librevenge::RVNGInputStream> namedSubStream(input.getSubStreamByName(name));
+		std::unique_ptr<librevenge::RVNGInputStream> subStream(input.getSubStreamById(i));
+		std::unique_ptr<librevenge::RVNGInputStream> namedSubStream(input.getSubStreamByName(name));
 		bool subStreamIsStructured = false;
 		bool namedSubStreamIsStructured = false;
 		unsigned long subStreamSize = 0;

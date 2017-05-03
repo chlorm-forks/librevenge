@@ -16,9 +16,8 @@
 
 #include <algorithm>
 #include <iterator>
+#include <memory>
 #include <vector>
-
-#include <boost/scoped_ptr.hpp>
 
 namespace fuzz
 {
@@ -59,12 +58,12 @@ void testStructuredStream(librevenge::RVNGInputStream &input)
 
 	for (unsigned i = 0, ssc = input.subStreamCount(); i < ssc; ++i)
 	{
-		boost::scoped_ptr<librevenge::RVNGInputStream> subStream(input.getSubStreamById(i));
+		std::unique_ptr<librevenge::RVNGInputStream> subStream(input.getSubStreamById(i));
 		if (bool(subStream))
 			testRead(*subStream, buf);
 
 		const char *const name = input.subStreamName(i);
-		boost::scoped_ptr<librevenge::RVNGInputStream> namedSubStream(input.getSubStreamByName(name));
+		std::unique_ptr<librevenge::RVNGInputStream> namedSubStream(input.getSubStreamByName(name));
 		if (bool(namedSubStream))
 			testRead(*namedSubStream, buf);
 	}

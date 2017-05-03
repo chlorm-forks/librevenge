@@ -23,7 +23,6 @@
 #include <boost/archive/iterators/remove_whitespace.hpp>
 #include <boost/archive/iterators/transform_width.hpp>
 #include <boost/range/iterator_range.hpp>
-#include <boost/scoped_ptr.hpp>
 
 #include <memory>
 #include <vector>
@@ -46,7 +45,7 @@ struct DataImpl
 	DataImpl() : m_buf(), m_stream() {}
 
 	std::vector<unsigned char> m_buf;
-	boost::scoped_ptr<RVNGMemoryInputStream> m_stream;
+	std::unique_ptr<RVNGMemoryInputStream> m_stream;
 };
 
 void convertFromBase64(std::vector<unsigned char> &result, const std::string &source)

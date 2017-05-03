@@ -207,7 +207,6 @@ AC_CHECK_HEADERS(
 		boost/archive/iterators/transform_width.hpp \
 		boost/lexical_cast.hpp \
 		boost/range/iterator_range.hpp \
-		boost/scoped_ptr.hpp \
 		boost/spirit/include/qi.hpp \
 		,
 	[],

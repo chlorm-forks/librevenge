@@ -13,10 +13,10 @@
  */
 
 #include <sys/stat.h>
+#include <cassert>
+#include <memory>
 #include <string>
 #include <vector>
-
-#include <boost/scoped_ptr.hpp>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -26,8 +26,6 @@
 #if !defined RVNG_DIRECTORY_STREAM_TEST_DIR
 #error RVNG_DIRECTORY_STREAM_TEST_DIR not defined, cannot test
 #endif
-
-using boost::scoped_ptr;
 
 using librevenge::RVNGDirectoryStream;
 using librevenge::RVNGInputStream;
@@ -149,17 +147,17 @@ void RVNGDirectoryStreamTest::tearDown()
 
 void RVNGDirectoryStreamTest::testConstruction()
 {
-	const scoped_ptr<RVNGDirectoryStream> dir(RVNGDirectoryStream::createForParent(m_file.c_str()));
+	const std::unique_ptr<RVNGDirectoryStream> dir(RVNGDirectoryStream::createForParent(m_file.c_str()));
 	CPPUNIT_ASSERT(bool(dir));
 	CPPUNIT_ASSERT(dir->isStructured());
 
 	// this should work for dirs too
-	const scoped_ptr<RVNGDirectoryStream> dir2(RVNGDirectoryStream::createForParent(m_dir.c_str()));
+	const std::unique_ptr<RVNGDirectoryStream> dir2(RVNGDirectoryStream::createForParent(m_dir.c_str()));
 	CPPUNIT_ASSERT(bool(dir2));
 	CPPUNIT_ASSERT(dir2->isStructured());
 
 	// for nonexistent dirs nothing is created
-	const scoped_ptr<RVNGDirectoryStream> nondir(RVNGDirectoryStream::createForParent(m_nonexistent.c_str()));
+	const std::unique_ptr<RVNGDirectoryStream> nondir(RVNGDirectoryStream::createForParent(m_nonexistent.c_str()));
 	CPPUNIT_ASSERT(!nondir);
 
 	// even if try harder, just an empty shell is created
@@ -195,17 +193,17 @@ void RVNGDirectoryStreamTest::testStructuredOperations()
 		RVNGDirectoryStream dir(m_dir.c_str());
 
 		CPPUNIT_ASSERT(dir.isStructured());
-		scoped_ptr<RVNGInputStream> substream(dir.getSubStreamByName(TEST_FILENAME));
+		std::unique_ptr<RVNGInputStream> substream(dir.getSubStreamByName(TEST_FILENAME));
 		CPPUNIT_ASSERT(substream.get());
 
 		// TODO: test for other operations when they are implemented =)
 	}
 
 	{
-		scoped_ptr<RVNGDirectoryStream> dir(RVNGDirectoryStream::createForParent(m_file.c_str()));
+		std::unique_ptr<RVNGDirectoryStream> dir(RVNGDirectoryStream::createForParent(m_file.c_str()));
 
 		CPPUNIT_ASSERT(dir->isStructured());
-		scoped_ptr<RVNGInputStream> substream(dir->getSubStreamByName(TEST_FILENAME));
+		std::unique_ptr<RVNGInputStream> substream(dir->getSubStreamByName(TEST_FILENAME));
 		CPPUNIT_ASSERT(substream.get());
 
 		// TODO: test for other operations when they are implemented =)

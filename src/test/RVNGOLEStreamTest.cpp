@@ -17,10 +17,9 @@
  * applicable instead of those above.
  */
 
+#include <memory>
 #include <sstream>
 #include <string>
-
-#include <boost/scoped_ptr.hpp>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -35,8 +34,6 @@
 
 namespace test
 {
-
-using boost::scoped_ptr;
 
 using librevenge::RVNGInputStream;
 using librevenge::RVNGFileStream;
@@ -137,8 +134,8 @@ void RVNGOLEStreamTest::test()
 		assertSubStream(i, "exists", input.existsSubStream(subStreams[i].name));
 		assertSubStream(i, "has matching name", string(subStreams[i].name), string(input.subStreamName(i)));
 
-		const scoped_ptr<RVNGInputStream> streamById(input.getSubStreamById(i));
-		const scoped_ptr<RVNGInputStream> streamByName(input.getSubStreamByName(subStreams[i].name));
+		const std::unique_ptr<RVNGInputStream> streamById(input.getSubStreamById(i));
+		const std::unique_ptr<RVNGInputStream> streamByName(input.getSubStreamByName(subStreams[i].name));
 
 		assertSubStream(i, "can be retrieved by id", bool(streamById));
 		assertSubStream(i, "can be retrieved by name", bool(streamByName));

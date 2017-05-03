@@ -17,8 +17,7 @@
  * applicable instead of those above.
  */
 
-#include <boost/scoped_ptr.hpp>
-
+#include <memory>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -29,8 +28,6 @@
 
 #include "librevenge_internal.h"
 #include "RVNGMemoryStream.h"
-
-using boost::scoped_ptr;
 
 using namespace librevenge;
 
@@ -72,7 +69,7 @@ void RVNGStreamTest::tearDown()
 
 void RVNGStreamTest::testFileStream()
 {
-	scoped_ptr<RVNGInputStream> input(new RVNGFileStream(TMP_FILENAME));
+	std::unique_ptr<RVNGInputStream> input(new RVNGFileStream(TMP_FILENAME));
 	unsigned long numBytesRead = 0;
 
 	CPPUNIT_ASSERT_EQUAL(false, input->isStructured());
@@ -113,7 +110,7 @@ void RVNGStreamTest::testFileStream()
 
 void RVNGStreamTest::testStringStream()
 {
-	scoped_ptr<RVNGInputStream> input(new RVNGStringStream((const unsigned char *)"\1\2\3\4\0\5\6\7", 8));
+	std::unique_ptr<RVNGInputStream> input(new RVNGStringStream((const unsigned char *)"\1\2\3\4\0\5\6\7", 8));
 	unsigned long numBytesRead = 0;
 
 	CPPUNIT_ASSERT_EQUAL(false, input->isStructured());
