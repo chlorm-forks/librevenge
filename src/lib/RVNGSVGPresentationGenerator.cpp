@@ -16,11 +16,10 @@
 
 #include <iostream>
 #include <map>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <vector>
-
-#include <boost/shared_ptr.hpp>
 
 #include <librevenge-generators/librevenge-generators.h>
 
@@ -203,7 +202,7 @@ struct RVNGSVGPresentationGeneratorImpl
 	//! a map master name to master content
 	std::map<RVNGString, std::string> m_masterNameToContentMap;
 	//! the actual opened table
-	boost::shared_ptr<Table> m_table;
+	std::shared_ptr<Table> m_table;
 };
 
 RVNGSVGPresentationGeneratorImpl::RVNGSVGPresentationGeneratorImpl(RVNGStringVector &vec)

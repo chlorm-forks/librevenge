@@ -24,8 +24,8 @@
 #include <boost/archive/iterators/transform_width.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
 
+#include <memory>
 #include <vector>
 #include <string>
 #include <stdarg.h>
@@ -82,7 +82,7 @@ struct RVNGBinaryDataImpl
 
 	void makeUnique();
 
-	boost::shared_ptr<DataImpl> m_ptr;
+	std::shared_ptr<DataImpl> m_ptr;
 };
 
 RVNGBinaryDataImpl::RVNGBinaryDataImpl()
@@ -94,7 +94,7 @@ void RVNGBinaryDataImpl::makeUnique()
 {
 	if (!m_ptr.unique())
 	{
-		boost::shared_ptr<DataImpl> ptr(new DataImpl());
+		std::shared_ptr<DataImpl> ptr(new DataImpl());
 		ptr->m_buf = m_ptr->m_buf;
 		m_ptr = ptr;
 	}
@@ -237,7 +237,7 @@ const RVNGString RVNGBinaryData::getBase64Data() const
 
 RVNGInputStream *RVNGBinaryData::getDataStream() const
 {
-	boost::shared_ptr<DataImpl> data = m_binaryDataImpl->m_ptr;
+	std::shared_ptr<DataImpl> data = m_binaryDataImpl->m_ptr;
 	if (data->m_stream)
 	{
 		data->m_stream.reset();
