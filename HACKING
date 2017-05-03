@@ -5,7 +5,7 @@ Indentation/spacing: We indent with tabs. Not spaces. This decision is, of
 course, rather contentious, but it does have the force of inertia going for
 it. Try to keep lines less than 120 columns wide. Please run
 
-    astyle --options=astyle.options \*.h \*.cpp
+    make astyle
 
 before committing.
 
@@ -23,9 +23,9 @@ variables (i.e.: my_class->m_var). Short-hand for variable names is allowed,
 but don't overdo it (m_var->len() instead of m_variable->length() is ok,
 m_nam instead of m_name is stupid).
 
-Memory allocation: Use the C++ standard operations for this (new, delete). 
-Use of smart pointers, e.g., boost::shared_ptr and boost::scoped_ptr, is
-strongly encouraged. The only exeption to that is public API, where only plain
+Memory allocation: Use C++ smart pointers, i.e., std::shared_ptr and
+std::unique_ptr. Direct memory management using plain pointers and new/delete is
+strongly discouraged. The only exeption to that is public API, where only plain
 pointers are allowed.
 
 Data structures: Use the C++ standard library wherever appropriate and 
