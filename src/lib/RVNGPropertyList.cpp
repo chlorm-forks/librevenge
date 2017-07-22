@@ -93,10 +93,10 @@ namespace librevenge
 class RVNGPropertyListElement
 {
 public:
-	RVNGPropertyListElement() : m_prop(0), m_vec(0) {}
+	RVNGPropertyListElement() : m_prop(nullptr), m_vec(nullptr) {}
 	RVNGPropertyListElement(const RVNGPropertyListElement &elem)
-		: m_prop(elem.m_prop ? elem.m_prop->clone() : 0),
-		  m_vec(elem.m_vec ? static_cast<RVNGPropertyListVector *>(elem.m_vec->clone()) : 0) {}
+		: m_prop(elem.m_prop ? elem.m_prop->clone() : nullptr),
+		  m_vec(elem.m_vec ? static_cast<RVNGPropertyListVector *>(elem.m_vec->clone()) : nullptr) {}
 	/*
 	 * Caution, following constructor does not allocate memory but takes as
 	 * arguments pre-allocated memory that this class takes ownership of.
@@ -111,8 +111,8 @@ public:
 	}
 	RVNGPropertyListElement &operator=(const RVNGPropertyListElement &elem)
 	{
-		m_prop = elem.m_prop ? elem.m_prop->clone() : 0;
-		m_vec = elem.m_vec ? static_cast<RVNGPropertyListVector *>(elem.m_vec->clone()) : 0;
+		m_prop = elem.m_prop ? elem.m_prop->clone() : nullptr;
+		m_vec = elem.m_vec ? static_cast<RVNGPropertyListVector *>(elem.m_vec->clone()) : nullptr;
 		return *this;
 	}
 	RVNGProperty *m_prop;
@@ -148,7 +148,7 @@ const RVNGProperty *RVNGPropertyListImpl::operator[](const char *name) const
 	std::map<std::string, RVNGPropertyListElement>::iterator i = m_map.find(name);
 	if (i != m_map.end())
 		return i->second.m_prop;
-	return 0;
+	return nullptr;
 }
 
 const RVNGPropertyListVector *RVNGPropertyListImpl::child(const char *name) const
@@ -159,7 +159,7 @@ const RVNGPropertyListVector *RVNGPropertyListImpl::child(const char *name) cons
 		return i->second.m_vec;
 	}
 
-	return 0;
+	return nullptr;
 }
 
 void RVNGPropertyListImpl::insert(const char *name, RVNGProperty *prop)
@@ -168,13 +168,13 @@ void RVNGPropertyListImpl::insert(const char *name, RVNGProperty *prop)
 	if (i != m_map.end() && !(m_map.key_comp()(name, i->first)))
 	{
 		delete i->second.m_vec;
-		i->second.m_vec = 0;
+		i->second.m_vec = nullptr;
 		RVNGProperty *tmpProp = i->second.m_prop;
 		i->second.m_prop = prop;
 		delete tmpProp;
 		return;
 	}
-	m_map.insert(i, std::map<std::string, RVNGPropertyListElement>::value_type(name, RVNGPropertyListElement(prop, 0)));
+	m_map.insert(i, std::map<std::string, RVNGPropertyListElement>::value_type(name, RVNGPropertyListElement(prop, nullptr)));
 }
 
 void RVNGPropertyListImpl::insert(const char *name, RVNGPropertyListVector *vec)
@@ -183,13 +183,13 @@ void RVNGPropertyListImpl::insert(const char *name, RVNGPropertyListVector *vec)
 	if (i != m_map.end() && !(m_map.key_comp()(name, i->first)))
 	{
 		delete i->second.m_prop;
-		i->second.m_prop = 0;
+		i->second.m_prop = nullptr;
 		RVNGPropertyListVector *tmpProp = i->second.m_vec;
 		i->second.m_vec = vec;
 		delete tmpProp;
 		return;
 	}
-	m_map.insert(i, std::map<std::string, RVNGPropertyListElement>::value_type(name, RVNGPropertyListElement(0, vec)));
+	m_map.insert(i, std::map<std::string, RVNGPropertyListElement>::value_type(name, RVNGPropertyListElement(nullptr, vec)));
 }
 
 void RVNGPropertyListImpl::remove(const char *name)
@@ -424,14 +424,14 @@ const RVNGProperty *RVNGPropertyListIterImpl::operator()() const
 		return m_iter->second.m_prop;
 	if (m_iter->second.m_vec)
 		return m_iter->second.m_vec;
-	return 0;
+	return nullptr;
 }
 
 const RVNGPropertyListVector *RVNGPropertyListIterImpl::child() const
 {
 	if (m_iter->second.m_vec)
 		return m_iter->second.m_vec;
-	return 0;
+	return nullptr;
 }
 
 const char *RVNGPropertyListIterImpl::key() const

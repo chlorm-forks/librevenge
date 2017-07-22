@@ -40,7 +40,7 @@ public:
 	}
 	const char *subStreamName(unsigned) override
 	{
-		return 0;
+		return nullptr;
 	}
 	bool existsSubStream(const char *) override
 	{
@@ -48,11 +48,11 @@ public:
 	}
 	RVNGInputStream *getSubStreamByName(const char *) override
 	{
-		return 0;
+		return nullptr;
 	}
 	RVNGInputStream *getSubStreamById(unsigned) override
 	{
-		return 0;
+		return nullptr;
 	}
 	const unsigned char *read(unsigned long numBytes, unsigned long &numBytesRead) override;
 	int seek(long offset, RVNG_SEEK_TYPE seekType) override;

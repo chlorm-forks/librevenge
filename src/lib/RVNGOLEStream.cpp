@@ -317,13 +317,13 @@ public:
 	/** returns the entry with a given index */
 	DirEntry const *entry(unsigned ind) const
 	{
-		if (ind >= count()) return 0;
+		if (ind >= count()) return nullptr;
 		return &m_entries[ size_t(ind) ];
 	}
 	/** returns the entry with a given index */
 	DirEntry *entry(unsigned ind)
 	{
-		if (ind >= count()) return  0;
+		if (ind >= count()) return  nullptr;
 		return &m_entries[ size_t(ind) ];
 	}
 	/** returns the entry with a given name */
@@ -489,7 +489,7 @@ public:
 	//! returns a directory entry corresponding to a name
 	DirEntry *entry(const std::string &name)
 	{
-		if (!name.length()) return 0;
+		if (!name.length()) return nullptr;
 		load();
 		return m_dirtree.entry(name);
 	}
@@ -649,15 +649,15 @@ protected:
 		if (name.length()==0)
 		{
 			RVNG_DEBUG_MSG(("librevengeOLE::OStorage::createEntry: called with no name\n"));
-			return 0;
+			return nullptr;
 		}
 		if (m_dirtree.index(name)!=NotFound)
 		{
 			RVNG_DEBUG_MSG(("librevengeOLE::OStorage::createEntry: entry %s already exists\n", name.c_str()));
-			return 0;
+			return nullptr;
 		}
 		unsigned index = m_dirtree.index(name,true);
-		if (index == NotFound) return 0;
+		if (index == NotFound) return nullptr;
 
 		return m_dirtree.entry(index);
 	}
@@ -1500,7 +1500,7 @@ bool librevenge::OStorage::updateToSave()
 
 unsigned librevenge::OStorage::insertData(unsigned char const *buffer, unsigned long len, bool useBigBlock, unsigned end)
 {
-	if (buffer==0 || len == 0)
+	if (buffer==nullptr || len == 0)
 	{
 		RVNG_DEBUG_MSG(("librevengeOLE::OStorage::insertData: call with no data\n"));
 		return 0;
@@ -1710,7 +1710,7 @@ bool librevenge::IStream::createOleFromDirectory(IStorage *io, std::string const
 			}
 			else
 			{
-				ok=storage.addStream(nodes[l], 0, 0);
+				ok=storage.addStream(nodes[l], nullptr, 0);
 			}
 			if (!ok)
 			{
@@ -1748,7 +1748,7 @@ bool librevenge::IStream::createOleFromDirectory(IStorage *io, std::string const
 // =========== Storage ==========
 
 librevenge::Storage::Storage(RVNGInputStream *is) :
-	m_io(0)
+	m_io(nullptr)
 {
 	m_io = new IStorage(is);
 }
@@ -1787,7 +1787,7 @@ std::vector<std::string> librevenge::Storage::getSubStreamNamesList()
 // =========== Stream ==========
 
 librevenge::Stream::Stream(librevenge::Storage *storage, const std::string &name) :
-	m_io(0)
+	m_io(nullptr)
 {
 	m_io = new librevenge::IStream(storage->m_io, name);
 }

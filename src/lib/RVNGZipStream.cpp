@@ -428,13 +428,13 @@ RVNGInputStream *RVNGZipStream::getSubstream(RVNGInputStream *input, const char 
 {
 	CentralDirectoryEntry entry;
 	if (!findDataStream(input, entry, name))
-		return 0;
+		return nullptr;
 	if (!entry.compressed_size)
-		return 0;
+		return nullptr;
 	unsigned long numBytesRead = 0;
 	unsigned char *compressedData = const_cast<unsigned char *>(input->read(entry.compressed_size, numBytesRead));
 	if (numBytesRead != entry.compressed_size)
-		return 0;
+		return nullptr;
 	if (!entry.compression)
 		return new RVNGStringStream(compressedData, (unsigned)numBytesRead);
 	else
@@ -450,7 +450,7 @@ RVNGInputStream *RVNGZipStream::getSubstream(RVNGInputStream *input, const char 
 		strm.next_in = Z_NULL;
 		ret = inflateInit2(&strm,-MAX_WBITS);
 		if (ret != Z_OK)
-			return 0;
+			return nullptr;
 
 		const unsigned long blockSize = (std::max)(4096ul, 2 * numBytesRead);
 
@@ -489,7 +489,7 @@ RVNGInputStream *RVNGZipStream::getSubstream(RVNGInputStream *input, const char 
 		(void)inflateEnd(&strm);
 
 		if (strm.total_out == 0)
-			return 0;
+			return nullptr;
 		return new RVNGStringStream(&data[0], (unsigned int) strm.total_out);
 	}
 }

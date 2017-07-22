@@ -336,7 +336,7 @@ bool RVNGString::operator<(const RVNGString &str) const
 RVNGString::Iter::Iter(const RVNGString &str) :
 	m_stringImpl(new RVNGStringImpl),
 	m_pos(0),
-	m_curChar(0)
+	m_curChar(nullptr)
 {
 	m_stringImpl->m_buf = str.cstr();
 }
@@ -379,7 +379,7 @@ bool RVNGString::Iter::last()
 
 const char *RVNGString::Iter::operator()() const
 {
-	if (m_pos == (-1)) return 0;
+	if (m_pos == (-1)) return nullptr;
 
 	int charLength =(int)(librvng_utf8_next_char(&(m_stringImpl->m_buf.c_str()[m_pos])) -
 	                      &(m_stringImpl->m_buf.c_str()[m_pos]));

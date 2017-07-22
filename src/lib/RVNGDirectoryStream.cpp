@@ -105,7 +105,7 @@ RVNGDirectoryStreamImpl::RVNGDirectoryStreamImpl(const char *const path)
 }
 
 RVNGDirectoryStream::RVNGDirectoryStream(const char *const path)
-	: m_impl(0)
+	: m_impl(nullptr)
 {
 	if (isDir(path))
 		m_impl = new RVNGDirectoryStreamImpl(path);
@@ -129,7 +129,7 @@ RVNGDirectoryStream *RVNGDirectoryStream::createForParent(const char *const path
 		return strm;
 
 	delete strm;
-	return 0;
+	return nullptr;
 }
 
 bool RVNGDirectoryStream::isDirectory(const char *const path)
@@ -156,7 +156,7 @@ const char *RVNGDirectoryStream::subStreamName(unsigned id)
 {
 	// TODO: implement me
 	(void) id;
-	return 0;
+	return nullptr;
 }
 
 bool RVNGDirectoryStream::existsSubStream(const char *name)
@@ -176,7 +176,7 @@ bool RVNGDirectoryStream::existsSubStream(const char *name)
 RVNGInputStream *RVNGDirectoryStream::getSubStreamByName(const char *const name)
 {
 	if (!m_impl)
-		return 0;
+		return nullptr;
 	std::string path(name);
 	sanitizePath(path);
 	std::vector<std::string> splitPath;
@@ -189,20 +189,20 @@ RVNGInputStream *RVNGDirectoryStream::getSubStreamByName(const char *const name)
 	else if (isDir(path.c_str()))
 		return new RVNGDirectoryStream(path.c_str());
 
-	return 0;
+	return nullptr;
 }
 
 RVNGInputStream *RVNGDirectoryStream::getSubStreamById(unsigned id)
 {
 	// TODO: implement me
 	(void) id;
-	return 0;
+	return nullptr;
 }
 
 const unsigned char *RVNGDirectoryStream::read(const unsigned long, unsigned long &numBytesRead)
 {
 	numBytesRead = 0;
-	return 0;
+	return nullptr;
 }
 
 int RVNGDirectoryStream::seek(const long, const RVNG_SEEK_TYPE)

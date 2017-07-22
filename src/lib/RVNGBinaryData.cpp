@@ -222,7 +222,7 @@ RVNGBinaryData &RVNGBinaryData::operator=(const RVNGBinaryData &dataBuf)
 const unsigned char *RVNGBinaryData::getDataBuffer() const
 {
 	if (m_binaryDataImpl->m_ptr->m_buf.empty())
-		return 0;
+		return nullptr;
 	return &(m_binaryDataImpl->m_ptr->m_buf[0]);
 }
 
@@ -241,7 +241,7 @@ RVNGInputStream *RVNGBinaryData::getDataStream() const
 		data->m_stream.reset();
 	}
 	if (data->m_buf.empty())
-		return 0;
+		return nullptr;
 	data->m_stream.reset(new RVNGMemoryInputStream(&(data->m_buf[0]), data->m_buf.size()));
 	return data->m_stream.get();
 }

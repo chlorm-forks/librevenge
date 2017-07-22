@@ -72,9 +72,9 @@ private:
 };
 
 RVNGFileStreamPrivate::RVNGFileStreamPrivate() :
-	file(0),
+	file(nullptr),
 	streamSize(0),
-	readBuffer(0),
+	readBuffer(nullptr),
 	readBufferLength(0),
 	readBufferPos(0),
 	streamType(UNKNOWN),
@@ -112,7 +112,7 @@ RVNGFileStream::RVNGFileStream(const char *filename) :
 	if (!d->file || ferror(d->file))
 	{
 		delete d;
-		d = 0;
+		d = nullptr;
 		return;
 	}
 
@@ -121,7 +121,7 @@ RVNGFileStream::RVNGFileStream(const char *filename) :
 	if ((0 != retval) || !S_ISREG(status.st_mode))
 	{
 		delete d;
-		d = 0;
+		d = nullptr;
 		return;
 	}
 
@@ -149,11 +149,11 @@ const unsigned char *RVNGFileStream::read(unsigned long numBytes, unsigned long 
 	numBytesRead = 0;
 
 	if (!d)
-		return 0;
+		return nullptr;
 
 	if (numBytes == 0 || numBytes > (std::numeric_limits<unsigned long>::max)()/2
 	        || ferror(d->file))
-		return 0;
+		return nullptr;
 
 	// can we read from the buffer?
 	if (d->readBuffer && (d->readBufferPos + numBytes > d->readBufferPos)
@@ -171,14 +171,14 @@ const unsigned char *RVNGFileStream::read(unsigned long numBytes, unsigned long 
 		fseek(d->file, (long)ftell(d->file) - (long)d->readBufferLength, SEEK_SET);
 		fseek(d->file, (long)d->readBufferPos, SEEK_CUR);
 		delete [] d->readBuffer;
-		d->readBuffer = 0;
+		d->readBuffer = nullptr;
 		d->readBufferPos = 0;
 		d->readBufferLength = 0;
 	}
 
 	unsigned long curpos = (unsigned long) tell();
 	if (curpos == (unsigned long)-1)  // tellg() returned ERROR
-		return 0;
+		return nullptr;
 
 	if ((curpos + numBytes < curpos) /*overflow*/ ||
 	        (curpos + numBytes >= d->streamSize))  /*reading more than available*/
@@ -187,7 +187,7 @@ const unsigned char *RVNGFileStream::read(unsigned long numBytes, unsigned long 
 	}
 
 	if (numBytes == 0)
-		return 0;
+		return nullptr;
 
 	if (numBytes < BUFFER_MAX)
 	{
@@ -209,7 +209,7 @@ const unsigned char *RVNGFileStream::read(unsigned long numBytes, unsigned long 
 
 	d->readBufferPos = 0;
 	if (!d->readBufferLength)
-		return 0;
+		return nullptr;
 
 	numBytesRead = numBytes;
 
@@ -249,7 +249,7 @@ int RVNGFileStream::seek(long offset, RVNG_SEEK_TYPE seekType)
 		fseek(d->file, (long)ftell(d->file) - (long)d->readBufferLength, SEEK_SET);
 		fseek(d->file, (long) d->readBufferPos, SEEK_CUR);
 		delete [] d->readBuffer;
-		d->readBuffer = 0;
+		d->readBuffer = nullptr;
 		d->readBufferPos = 0;
 		d->readBufferLength = 0;
 	}
@@ -315,7 +315,7 @@ unsigned RVNGFileStream::subStreamCount()
 const char *RVNGFileStream::subStreamName(unsigned id)
 {
 	if (!isStructured() ||!d || id>=(unsigned) d->streamNameList.size())
-		return 0;
+		return nullptr;
 	return d->streamNameList[size_t(id)].c_str();
 }
 
@@ -345,18 +345,18 @@ RVNGInputStream *RVNGFileStream::getSubStreamById(unsigned id)
 RVNGInputStream *RVNGFileStream::getSubStreamByName(const char *name)
 {
 	if (!name || !d)
-		return 0;
+		return nullptr;
 	if (ferror(d->file))
-		return 0;
+		return nullptr;
 	if (d->streamType == UNKNOWN && !isStructured())
-		return 0;
+		return nullptr;
 	if (d->streamType == OLE2)
 	{
 		seek(0, RVNG_SEEK_SET);
 		Storage tmpStorage(this);
 		Stream tmpStream(&tmpStorage, name);
 		if (tmpStorage.result() != Storage::Ok  || !tmpStream.size())
-			return (RVNGInputStream *)0;
+			return (RVNGInputStream *)nullptr;
 
 		std::vector<unsigned char> buf(tmpStream.size());
 		unsigned long tmpLength;
@@ -366,7 +366,7 @@ RVNGInputStream *RVNGFileStream::getSubStreamByName(const char *name)
 		if (tmpLength != tmpStream.size())
 			/* something went wrong here and we do not trust the
 			   resulting buffer */
-			return (RVNGInputStream *)0;
+			return (RVNGInputStream *)nullptr;
 
 		return new RVNGStringStream(&buf[0], (unsigned)tmpLength);
 	}
@@ -375,7 +375,7 @@ RVNGInputStream *RVNGFileStream::getSubStreamByName(const char *name)
 		seek(0, RVNG_SEEK_SET);
 		return RVNGZipStream::getSubstream(this, name);
 	}
-	return 0;
+	return nullptr;
 }
 
 RVNGStringStream::RVNGStringStream(const unsigned char *data, const unsigned int dataSize) :
@@ -394,7 +394,7 @@ const unsigned char *RVNGStringStream::read(unsigned long numBytes, unsigned lon
 	numBytesRead = 0;
 
 	if (numBytes == 0)
-		return 0;
+		return nullptr;
 
 	long numBytesToRead;
 
@@ -406,7 +406,7 @@ const unsigned char *RVNGStringStream::read(unsigned long numBytes, unsigned lon
 	numBytesRead = (unsigned long) numBytesToRead; // about as paranoid as we can be..
 
 	if (numBytesToRead == 0)
-		return 0;
+		return nullptr;
 
 	long oldOffset = d->offset;
 	d->offset += numBytesToRead;
@@ -493,7 +493,7 @@ unsigned RVNGStringStream::subStreamCount()
 const char *RVNGStringStream::subStreamName(unsigned id)
 {
 	if (!isStructured() ||!d || id>=(unsigned) d->streamNameList.size())
-		return 0;
+		return nullptr;
 	return d->streamNameList[size_t(id)].c_str();
 }
 
@@ -523,9 +523,9 @@ RVNGInputStream *RVNGStringStream::getSubStreamById(unsigned id)
 RVNGInputStream *RVNGStringStream::getSubStreamByName(const char *name)
 {
 	if (!name || d->buffer.empty())
-		return 0;
+		return nullptr;
 	if (d->streamType == UNKNOWN && !isStructured())
-		return 0;
+		return nullptr;
 
 	if (d->streamType == OLE2)
 	{
@@ -533,7 +533,7 @@ RVNGInputStream *RVNGStringStream::getSubStreamByName(const char *name)
 		Storage tmpStorage(this);
 		Stream tmpStream(&tmpStorage, name);
 		if (tmpStorage.result() != Storage::Ok  || !tmpStream.size())
-			return (RVNGInputStream *)0;
+			return (RVNGInputStream *)nullptr;
 
 		std::vector<unsigned char> buf(tmpStream.size());
 		unsigned long tmpLength;
@@ -543,13 +543,13 @@ RVNGInputStream *RVNGStringStream::getSubStreamByName(const char *name)
 		if (tmpLength != tmpStream.size())
 			/* something went wrong here and we do not trust the
 			   resulting buffer */
-			return (RVNGInputStream *)0;
+			return (RVNGInputStream *)nullptr;
 
 		return new RVNGStringStream(&buf[0], (unsigned)tmpLength);
 	}
 	else if (d->streamType == ZIP)
 		return RVNGZipStream::getSubstream(this, name);
-	return 0;
+	return nullptr;
 }
 
 }
