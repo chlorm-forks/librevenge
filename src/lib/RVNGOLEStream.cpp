@@ -224,8 +224,8 @@ public:
 	//! returns true if the clsid field is filed
 	bool hasCLSId() const
 	{
-		for (int i=0; i < 4; i++)
-			if (m_clsid[i]) return true;
+		for (unsigned int i : m_clsid)
+			if (i) return true;
 		return false;
 	}
 	/** four uint32_t : the first two used for creation, the last for modification time */
@@ -339,12 +339,12 @@ public:
 		DirEntry const *p = entry(ind);
 		if (!p || !p->m_valid) return 0;
 		std::vector<unsigned> siblingsList = get_siblings(p->m_child);
-		for (size_t s=0; s < siblingsList.size(); s++)
+		for (unsigned s : siblingsList)
 		{
-			p  = entry(siblingsList[s]);
+			p  = entry(s);
 			if (!p) continue;
 			if (p->name()==name)
-				return siblingsList[s];
+				return s;
 		}
 		return 0;
 	}
@@ -392,9 +392,8 @@ protected:
 		std::set<unsigned> seens;
 		get_siblings(ind, seens);
 		std::vector<unsigned> retVal;
-		for (std::set<unsigned>::const_iterator iter = seens.begin();
-		        iter != seens.end(); ++iter)
-			retVal.push_back(*iter);
+		for (unsigned seen : seens)
+			retVal.push_back(seen);
 		return retVal;
 	}
 	//! constructs the list of siblings ( by filling the seens set )
@@ -747,8 +746,8 @@ librevenge::Header::Header() :
 {
 	for (unsigned i = 0; i < 8; i++)
 		m_magic[i] = s_ole_magic[i];
-	for (unsigned j=0; j<109; j++)
-		m_blocks_bbat[j] = Avail;
+	for (unsigned long &j : m_blocks_bbat)
+		j = Avail;
 	compute_block_size();
 }
 
@@ -1058,8 +1057,8 @@ void librevenge::DirTree::getSubStreamList(unsigned ind, bool all, const std::st
 	if (p->m_child >= cnt)
 		return;
 	std::vector<unsigned> siblings=get_siblings(p->m_child);
-	for (size_t s=0; s < siblings.size(); s++)
-		getSubStreamList(siblings[s], all, name, res, seen);
+	for (unsigned sibling : siblings)
+		getSubStreamList(sibling, all, name, res, seen);
 }
 
 void librevenge::DirTree::setInRedBlackTreeForm(unsigned ind, std::set<unsigned> &seen)
@@ -1082,9 +1081,8 @@ void librevenge::DirTree::setInRedBlackTreeForm(unsigned ind, std::set<unsigned>
 	CompareEntryName compare(*this);
 	std::set<unsigned,CompareEntryName> set(childs.begin(),childs.end(),compare);
 	std::vector<unsigned> sortedChildren;
-	for (std::set<unsigned,CompareEntryName>::const_iterator iter = set.begin();
-	        iter != set.end(); ++iter)
-		sortedChildren.push_back(*iter);
+	for (unsigned iter : set)
+		sortedChildren.push_back(iter);
 	if (sortedChildren.size() != numChild)
 	{
 		RVNG_DEBUG_MSG(("DirTree::setInRedBlackTreeForm: OOPS pb with numChild\n"));
@@ -1773,13 +1771,13 @@ std::vector<std::string> librevenge::Storage::getSubStreamNamesList()
 	std::vector<std::string> res=m_io->getSubStreamNamesList();
 
 	// time to do some cleaning ( remove ^A, ^B, ... )
-	for (size_t i = 0; i < res.size(); ++i)
+	for (auto &re : res)
 	{
-		std::string str=res[i], finalStr("");
-		for (size_t s=0; s<str.length(); ++s)
-			if (str[s]>=32)
-				finalStr+=str[s];
-		res[i]=finalStr;
+		std::string str=re, finalStr("");
+		for (char s : str)
+			if (s>=32)
+				finalStr+=s;
+		re=finalStr;
 	}
 	return res;
 }

@@ -329,9 +329,9 @@ bool RVNGFileStream::existsSubStream(const char *name)
 		return false;
 	if (d->streamType == FLAT)
 		return false;
-	for (std::vector<std::string>::size_type i = 0; i < d->streamNameList.size(); ++i)
+	for (const auto &i : d->streamNameList)
 	{
-		if (d->streamNameList[i] == name)
+		if (i == name)
 			return true;
 	}
 	return false;
@@ -507,9 +507,9 @@ bool RVNGStringStream::existsSubStream(const char *name)
 		return false;
 	if (d->streamType == FLAT)
 		return false;
-	for (std::vector<std::string>::size_type i = 0; i < d->streamNameList.size(); ++i)
+	for (const auto &i : d->streamNameList)
 	{
-		if (d->streamNameList[i] == name)
+		if (i == name)
 			return true;
 	}
 	return false;

@@ -151,8 +151,8 @@ void RVNGCSVSpreadsheetGeneratorImpl::insertInstruction(librevenge::RVNGProperty
 		}
 		std::string text(instr["librevenge:text"]->getStr().cstr());
 		insertCharacter('"');
-		for (size_t t=0; t < text.length(); ++t)
-			insertCharacter((char) text[t]);
+		for (char t : text)
+			insertCharacter(t);
 		insertCharacter('"');
 		return;
 	}

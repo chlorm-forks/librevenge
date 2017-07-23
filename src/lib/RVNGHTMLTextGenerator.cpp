@@ -66,8 +66,8 @@ struct RVNGHTMLTextZone
 	//! returns true if there is no data
 	bool isEmpty() const
 	{
-		for (size_t i = 0; i < m_stringList.size(); i++)
-			if (m_stringList[i].size())
+		for (const auto &i : m_stringList)
+			if (i.size())
 				return false;
 		return true;
 	}
@@ -80,20 +80,19 @@ struct RVNGHTMLTextZone
 			out << "<hr>\n";
 		if (m_type==Z_MetaData)
 		{
-			for (size_t i = 0; i < m_stringList.size(); i++)
-				out << m_stringList[i];
+			for (const auto &i : m_stringList)
+				out << i;
 			return;
 		}
 		if (m_type==Z_TextBox)
 		{
 			out << "<p><b>TEXT BOXES</b></p><hr>\n";
-			for (size_t i = 0; i < m_stringList.size(); i++)
-				out << m_stringList[i] << "<hr>\n";
+			for (const auto &i : m_stringList)
+				out << i << "<hr>\n";
 			return;
 		}
-		for (size_t i = 0; i < m_stringList.size(); i++)
+		for (const auto &str : m_stringList)
 		{
-			std::string const &str=m_stringList[i];
 			out << str << "\n";
 			// check if we need to add a return line
 			size_t lastComPos=str.rfind('<');
@@ -256,9 +255,9 @@ struct RVNGHTMLTextGeneratorImpl
 	//! destructor
 	~RVNGHTMLTextGeneratorImpl()
 	{
-		for (size_t i=0; i<m_streamStack.size(); ++i)
+		for (auto &i : m_streamStack)
 		{
-			if (m_streamStack[i]) delete m_streamStack[i];
+			if (i) delete i;
 		}
 		if (m_actualStream) delete m_actualStream;
 	}
