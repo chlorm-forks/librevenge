@@ -140,9 +140,9 @@ void RVNGStringTest::testConstruction()
 	// assignment from C string
 	RVNGString assign2;
 	assign2 = input;
-	CPPUNIT_ASSERT_EQUAL(static_cast<unsigned long>(len), assign.size());
-	CPPUNIT_ASSERT_EQUAL(int(len), assign.len());
-	CPPUNIT_ASSERT(equal(input, input + len, assign.cstr()));
+	CPPUNIT_ASSERT_EQUAL(static_cast<unsigned long>(len), assign2.size());
+	CPPUNIT_ASSERT_EQUAL(int(len), assign2.len());
+	CPPUNIT_ASSERT(equal(input, input + len, assign2.cstr()));
 }
 
 void RVNGStringTest::testAppend()
