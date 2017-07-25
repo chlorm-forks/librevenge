@@ -302,10 +302,9 @@ RVNGString &RVNGString::operator=(const RVNGString &stringBuf)
 
 RVNGString &RVNGString::operator=(const char *s)
 {
+	clear();
 	if (s)
 		m_stringImpl->append(s);
-	else
-		clear();
 	return *this;
 }
 
