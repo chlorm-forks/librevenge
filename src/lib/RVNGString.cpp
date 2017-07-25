@@ -261,7 +261,7 @@ void RVNGString::append(const char *s)
 
 void RVNGString::append(const char c)
 {
-	m_stringImpl->append(c);
+	m_stringImpl->m_buf.append(1, c);
 }
 
 void RVNGString::appendEscapedXML(const RVNGString &s)
