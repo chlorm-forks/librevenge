@@ -41,67 +41,67 @@ class REVENGE_GENERATORS_API RVNGRawDrawingGenerator : public RVNGDrawingInterfa
 public:
 	RVNGRawDrawingGenerator(bool printCallgraphScore);
 
-	~RVNGRawDrawingGenerator() override;
+	~RVNGRawDrawingGenerator();
 
-	void startDocument(const RVNGPropertyList &propList) override;
-	void endDocument() override;
-	void setDocumentMetaData(const RVNGPropertyList &propList) override;
-	void defineEmbeddedFont(const RVNGPropertyList &propList) override;
-	void startPage(const RVNGPropertyList &propList) override;
-	void endPage() override;
-	void startMasterPage(const RVNGPropertyList &propList) override;
-	void endMasterPage() override;
-	void startLayer(const RVNGPropertyList &propList) override;
-	void endLayer() override;
-	void startEmbeddedGraphics(const RVNGPropertyList &propList) override;
-	void endEmbeddedGraphics() override;
+	void startDocument(const RVNGPropertyList &propList);
+	void endDocument();
+	void setDocumentMetaData(const RVNGPropertyList &propList);
+	void defineEmbeddedFont(const RVNGPropertyList &propList);
+	void startPage(const RVNGPropertyList &propList);
+	void endPage();
+	void startMasterPage(const RVNGPropertyList &propList);
+	void endMasterPage();
+	void startLayer(const RVNGPropertyList &propList);
+	void endLayer();
+	void startEmbeddedGraphics(const RVNGPropertyList &propList);
+	void endEmbeddedGraphics();
 
-	void openGroup(const RVNGPropertyList &propList) override;
-	void closeGroup() override;
+	void openGroup(const RVNGPropertyList &propList);
+	void closeGroup();
 
-	void setStyle(const RVNGPropertyList &propList) override;
+	void setStyle(const RVNGPropertyList &propList);
 
-	void drawRectangle(const RVNGPropertyList &propList) override;
-	void drawEllipse(const RVNGPropertyList &propList) override;
-	void drawPolyline(const RVNGPropertyList &propList) override;
-	void drawPolygon(const RVNGPropertyList &propList) override;
-	void drawPath(const RVNGPropertyList &propList) override;
-	void drawGraphicObject(const RVNGPropertyList &propList) override;
-	void drawConnector(const RVNGPropertyList &propList) override;
-	void startTextObject(const RVNGPropertyList &propList) override;
-	void endTextObject() override;
+	void drawRectangle(const RVNGPropertyList &propList);
+	void drawEllipse(const RVNGPropertyList &propList);
+	void drawPolyline(const RVNGPropertyList &propList);
+	void drawPolygon(const RVNGPropertyList &propList);
+	void drawPath(const RVNGPropertyList &propList);
+	void drawGraphicObject(const RVNGPropertyList &propList);
+	void drawConnector(const RVNGPropertyList &propList);
+	void startTextObject(const RVNGPropertyList &propList);
+	void endTextObject();
 
-	void startTableObject(const RVNGPropertyList &propList) override;
-	void openTableRow(const RVNGPropertyList &propList) override;
-	void closeTableRow() override;
-	void openTableCell(const RVNGPropertyList &propList) override;
-	void closeTableCell() override;
-	void insertCoveredTableCell(const RVNGPropertyList &propList) override;
-	void endTableObject() override;
+	void startTableObject(const RVNGPropertyList &propList);
+	void openTableRow(const RVNGPropertyList &propList);
+	void closeTableRow();
+	void openTableCell(const RVNGPropertyList &propList);
+	void closeTableCell();
+	void insertCoveredTableCell(const RVNGPropertyList &propList);
+	void endTableObject();
 
-	void openOrderedListLevel(const RVNGPropertyList &propList) override;
-	void closeOrderedListLevel() override;
-	void openUnorderedListLevel(const RVNGPropertyList &propList) override;
-	void closeUnorderedListLevel() override;
-	void openListElement(const RVNGPropertyList &propList) override;
-	void closeListElement() override;
+	void openOrderedListLevel(const RVNGPropertyList &propList);
+	void closeOrderedListLevel();
+	void openUnorderedListLevel(const RVNGPropertyList &propList);
+	void closeUnorderedListLevel();
+	void openListElement(const RVNGPropertyList &propList);
+	void closeListElement();
 
-	void defineParagraphStyle(const RVNGPropertyList &propList) override;
-	void openParagraph(const RVNGPropertyList &propList) override;
-	void closeParagraph() override;
+	void defineParagraphStyle(const RVNGPropertyList &propList);
+	void openParagraph(const RVNGPropertyList &propList);
+	void closeParagraph();
 
-	void defineCharacterStyle(const RVNGPropertyList &propList) override;
-	void openSpan(const RVNGPropertyList &propList) override;
-	void closeSpan() override;
+	void defineCharacterStyle(const RVNGPropertyList &propList);
+	void openSpan(const RVNGPropertyList &propList);
+	void closeSpan();
 
-	void openLink(const RVNGPropertyList &propList) override;
-	void closeLink() override;
+	void openLink(const RVNGPropertyList &propList);
+	void closeLink();
 
-	void insertTab() override;
-	void insertSpace() override;
-	void insertText(const RVNGString &text) override;
-	void insertLineBreak() override;
-	void insertField(const RVNGPropertyList &propList) override;
+	void insertTab();
+	void insertSpace();
+	void insertText(const RVNGString &text);
+	void insertLineBreak();
+	void insertField(const RVNGPropertyList &propList);
 
 private:
 	RVNGRawDrawingGeneratorImpl *m_impl;

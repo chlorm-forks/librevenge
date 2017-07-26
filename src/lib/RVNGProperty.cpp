@@ -63,21 +63,21 @@ class RVNGStringProperty : public RVNGProperty
 public:
 	RVNGStringProperty(const RVNGString &str);
 	RVNGStringProperty(const char *str);
-	~RVNGStringProperty() override {}
-	int getInt() const override
+	~RVNGStringProperty() {}
+	virtual int getInt() const
 	{
 		return 0;
 	}
-	double getDouble() const override
+	virtual double getDouble() const
 	{
 		return 0;
 	}
-	RVNGUnit getUnit() const override
+	virtual RVNGUnit getUnit() const
 	{
 		return RVNG_UNIT_ERROR;
 	}
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	virtual RVNGString getStr() const;
+	virtual RVNGProperty *clone() const;
 
 private:
 	RVNGString m_str;
@@ -88,21 +88,21 @@ class RVNGBinaryDataProperty : public RVNGProperty
 public:
 	RVNGBinaryDataProperty(const RVNGBinaryData &data);
 	RVNGBinaryDataProperty(const unsigned char *buffer, const unsigned long bufferSize);
-	~RVNGBinaryDataProperty() override {}
-	int getInt() const override
+	~RVNGBinaryDataProperty() {}
+	virtual int getInt() const
 	{
 		return 0;
 	}
-	double getDouble() const override
+	virtual double getDouble() const
 	{
 		return 0;
 	}
-	RVNGUnit getUnit() const override
+	virtual RVNGUnit getUnit() const
 	{
 		return RVNG_UNIT_ERROR;
 	}
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	virtual RVNGString getStr() const;
+	virtual RVNGProperty *clone() const;
 
 private:
 	RVNGBinaryData m_data;
@@ -112,15 +112,15 @@ class RVNGIntProperty : public RVNGProperty
 {
 public:
 	RVNGIntProperty(const int val);
-	~RVNGIntProperty() override {}
-	int getInt() const override;
-	double getDouble() const override;
-	RVNGUnit getUnit() const override
+	~RVNGIntProperty() {}
+	virtual int getInt() const;
+	virtual double getDouble() const;
+	virtual RVNGUnit getUnit() const
 	{
 		return RVNG_GENERIC;
 	}
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	virtual RVNGString getStr() const;
+	virtual RVNGProperty *clone() const;
 
 private:
 	int m_val;
@@ -130,28 +130,28 @@ class RVNGBoolProperty : public RVNGIntProperty
 {
 public:
 	RVNGBoolProperty(const bool val);
-	~RVNGBoolProperty() override {}
-	RVNGUnit getUnit() const override
+	~RVNGBoolProperty() {}
+	virtual RVNGUnit getUnit() const
 	{
 		return RVNG_UNIT_ERROR;
 	}
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	virtual RVNGString getStr() const;
+	virtual RVNGProperty *clone() const;
 };
 
 class RVNGDoubleProperty : public RVNGProperty
 {
 public:
 	RVNGDoubleProperty(const double val);
-	~RVNGDoubleProperty() override {}
-	int getInt() const override;
-	double getDouble() const override;
-	RVNGUnit getUnit() const override
+	~RVNGDoubleProperty() {}
+	virtual int getInt() const;
+	virtual double getDouble() const;
+	virtual RVNGUnit getUnit() const
 	{
 		return RVNG_GENERIC;
 	}
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	virtual RVNGString getStr() const;
+	virtual RVNGProperty *clone() const;
 
 private:
 	double m_val;
@@ -161,61 +161,61 @@ class RVNGInchProperty : public RVNGDoubleProperty
 {
 public:
 	RVNGInchProperty(const double val);
-	~RVNGInchProperty() override {}
-	RVNGUnit getUnit() const override
+	~RVNGInchProperty() {}
+	virtual RVNGUnit getUnit() const
 	{
 		return RVNG_INCH;
 	}
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	virtual RVNGString getStr() const;
+	virtual RVNGProperty *clone() const;
 };
 
 class RVNGPercentProperty : public RVNGDoubleProperty
 {
 public:
 	RVNGPercentProperty(const double val);
-	~RVNGPercentProperty() override {}
-	RVNGUnit getUnit() const override
+	~RVNGPercentProperty() {}
+	virtual RVNGUnit getUnit() const
 	{
 		return RVNG_PERCENT;
 	}
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	virtual RVNGString getStr() const;
+	virtual RVNGProperty *clone() const;
 };
 
 class RVNGPointProperty : public RVNGDoubleProperty
 {
 public:
 	RVNGPointProperty(const double val);
-	~RVNGPointProperty() override {}
-	RVNGUnit getUnit() const override
+	~RVNGPointProperty() {}
+	virtual RVNGUnit getUnit() const
 	{
 		return RVNG_POINT;
 	}
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	virtual RVNGString getStr() const;
+	virtual RVNGProperty *clone() const;
 };
 
 class RVNGTwipProperty : public RVNGDoubleProperty
 {
 public:
 	RVNGTwipProperty(const double val);
-	~RVNGTwipProperty() override {}
-	RVNGUnit getUnit() const override
+	~RVNGTwipProperty() {}
+	virtual RVNGUnit getUnit() const
 	{
 		return RVNG_TWIP;
 	}
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	virtual RVNGString getStr() const;
+	virtual RVNGProperty *clone() const;
 };
 
 class RVNGGenericProperty : public RVNGDoubleProperty
 {
 public:
 	RVNGGenericProperty(const double val);
-	~RVNGGenericProperty() override {}
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	~RVNGGenericProperty() {}
+	virtual RVNGString getStr() const;
+	virtual RVNGProperty *clone() const;
 };
 
 RVNGProperty::~RVNGProperty()

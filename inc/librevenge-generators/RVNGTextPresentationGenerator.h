@@ -33,95 +33,95 @@ class REVENGE_GENERATORS_API RVNGTextPresentationGenerator : public RVNGPresenta
 
 public:
 	explicit RVNGTextPresentationGenerator(RVNGStringVector &pages);
-	~RVNGTextPresentationGenerator() override;
+	~RVNGTextPresentationGenerator();
 
-	void startDocument(const RVNGPropertyList &propList) override;
-	void endDocument() override;
-	void setDocumentMetaData(const RVNGPropertyList &propList) override;
-	void defineEmbeddedFont(const RVNGPropertyList &propList) override;
-	void startSlide(const RVNGPropertyList &propList) override;
-	void endSlide() override;
-	void startMasterSlide(const RVNGPropertyList &propList) override;
-	void endMasterSlide() override;
-	void setSlideTransition(const RVNGPropertyList &propList) override;
-	void startLayer(const RVNGPropertyList &propList) override;
-	void endLayer() override;
-	void startEmbeddedGraphics(const RVNGPropertyList &propList) override;
-	void endEmbeddedGraphics() override;
-	void openGroup(const RVNGPropertyList &propList) override;
-	void closeGroup() override;
+	void startDocument(const RVNGPropertyList &propList);
+	void endDocument();
+	void setDocumentMetaData(const RVNGPropertyList &propList);
+	void defineEmbeddedFont(const RVNGPropertyList &propList);
+	void startSlide(const RVNGPropertyList &propList);
+	void endSlide();
+	void startMasterSlide(const RVNGPropertyList &propList);
+	void endMasterSlide();
+	void setSlideTransition(const RVNGPropertyList &propList);
+	void startLayer(const RVNGPropertyList &propList);
+	void endLayer();
+	void startEmbeddedGraphics(const RVNGPropertyList &propList);
+	void endEmbeddedGraphics();
+	void openGroup(const RVNGPropertyList &propList);
+	void closeGroup();
 
-	void setStyle(const RVNGPropertyList &propList) override;
+	void setStyle(const RVNGPropertyList &propList);
 
-	void drawRectangle(const RVNGPropertyList &propList) override;
-	void drawEllipse(const RVNGPropertyList &propList) override;
-	void drawPolyline(const RVNGPropertyList &propList) override;
-	void drawPolygon(const RVNGPropertyList &propList) override;
-	void drawPath(const RVNGPropertyList &propList) override;
-	void drawGraphicObject(const RVNGPropertyList &propList) override;
-	void drawConnector(const RVNGPropertyList &propList) override;
+	void drawRectangle(const RVNGPropertyList &propList);
+	void drawEllipse(const RVNGPropertyList &propList);
+	void drawPolyline(const RVNGPropertyList &propList);
+	void drawPolygon(const RVNGPropertyList &propList);
+	void drawPath(const RVNGPropertyList &propList);
+	void drawGraphicObject(const RVNGPropertyList &propList);
+	void drawConnector(const RVNGPropertyList &propList);
 
-	void startTextObject(const RVNGPropertyList &propList) override;
-	void endTextObject() override;
-	void defineParagraphStyle(const RVNGPropertyList &propList) override;
-	void openParagraph(const RVNGPropertyList &propList) override;
-	void closeParagraph() override;
-	void defineCharacterStyle(const RVNGPropertyList &propList) override;
-	void openSpan(const RVNGPropertyList &propList) override;
-	void closeSpan() override;
+	void startTextObject(const RVNGPropertyList &propList);
+	void endTextObject();
+	void defineParagraphStyle(const RVNGPropertyList &propList);
+	void openParagraph(const RVNGPropertyList &propList);
+	void closeParagraph();
+	void defineCharacterStyle(const RVNGPropertyList &propList);
+	void openSpan(const RVNGPropertyList &propList);
+	void closeSpan();
 
-	void openLink(const RVNGPropertyList &propList) override;
-	void closeLink() override;
+	void openLink(const RVNGPropertyList &propList);
+	void closeLink();
 
-	void insertTab() override;
-	void insertSpace() override;
-	void insertText(const RVNGString &str) override;
-	void insertLineBreak() override;
+	void insertTab();
+	void insertSpace();
+	void insertText(const RVNGString &str);
+	void insertLineBreak();
 
-	void insertField(const RVNGPropertyList &propList) override;
+	void insertField(const RVNGPropertyList &propList);
 
-	void openOrderedListLevel(const RVNGPropertyList &propList) override;
-	void openUnorderedListLevel(const RVNGPropertyList &propList) override;
-	void closeOrderedListLevel() override;
-	void closeUnorderedListLevel() override;
-	void openListElement(const RVNGPropertyList &propList) override;
-	void closeListElement() override;
+	void openOrderedListLevel(const RVNGPropertyList &propList);
+	void openUnorderedListLevel(const RVNGPropertyList &propList);
+	void closeOrderedListLevel();
+	void closeUnorderedListLevel();
+	void openListElement(const RVNGPropertyList &propList);
+	void closeListElement();
 
-	void startTableObject(const RVNGPropertyList &propList) override;
-	void openTableRow(const RVNGPropertyList &propList) override;
-	void closeTableRow() override;
-	void openTableCell(const RVNGPropertyList &propList) override;
-	void closeTableCell() override;
-	void insertCoveredTableCell(const RVNGPropertyList &propList) override;
-	void endTableObject() override;
+	void startTableObject(const RVNGPropertyList &propList);
+	void openTableRow(const RVNGPropertyList &propList);
+	void closeTableRow();
+	void openTableCell(const RVNGPropertyList &propList);
+	void closeTableCell();
+	void insertCoveredTableCell(const RVNGPropertyList &propList);
+	void endTableObject();
 
-	void startComment(const RVNGPropertyList &propList) override;
-	void endComment() override;
+	void startComment(const RVNGPropertyList &propList);
+	void endComment();
 
-	void startNotes(const RVNGPropertyList &propList) override;
-	void endNotes() override;
+	void startNotes(const RVNGPropertyList &propList);
+	void endNotes();
 
-	void defineChartStyle(const RVNGPropertyList &propList) override;
-	void openChart(const RVNGPropertyList &propList) override;
-	void closeChart() override;
-	void openChartTextObject(const RVNGPropertyList &propList) override;
-	void closeChartTextObject() override;
-	void openChartPlotArea(const RVNGPropertyList &propList) override;
-	void closeChartPlotArea() override;
-	void insertChartAxis(const RVNGPropertyList &propList) override;
-	void openChartSeries(const librevenge::RVNGPropertyList &propList) override;
-	void closeChartSeries() override;
+	void defineChartStyle(const RVNGPropertyList &propList);
+	void openChart(const RVNGPropertyList &propList);
+	void closeChart();
+	void openChartTextObject(const RVNGPropertyList &propList);
+	void closeChartTextObject();
+	void openChartPlotArea(const RVNGPropertyList &propList);
+	void closeChartPlotArea();
+	void insertChartAxis(const RVNGPropertyList &propList);
+	void openChartSeries(const librevenge::RVNGPropertyList &propList);
+	void closeChartSeries();
 
-	void openAnimationSequence(const RVNGPropertyList &propList) override;
-	void closeAnimationSequence() override;
-	void openAnimationGroup(const RVNGPropertyList &propList) override;
-	void closeAnimationGroup() override;
-	void openAnimationIteration(const RVNGPropertyList &propList) override;
-	void closeAnimationIteration() override;
-	void insertMotionAnimation(const RVNGPropertyList &propList) override;
-	void insertColorAnimation(const RVNGPropertyList &propList) override;
-	void insertAnimation(const RVNGPropertyList &propList) override;
-	void insertEffect(const RVNGPropertyList &propList) override;
+	void openAnimationSequence(const RVNGPropertyList &propList);
+	void closeAnimationSequence();
+	void openAnimationGroup(const RVNGPropertyList &propList);
+	void closeAnimationGroup();
+	void openAnimationIteration(const RVNGPropertyList &propList);
+	void closeAnimationIteration();
+	void insertMotionAnimation(const RVNGPropertyList &propList);
+	void insertColorAnimation(const RVNGPropertyList &propList);
+	void insertAnimation(const RVNGPropertyList &propList);
+	void insertEffect(const RVNGPropertyList &propList);
 
 private:
 	RVNGTextPresentationGeneratorImpl *m_impl;

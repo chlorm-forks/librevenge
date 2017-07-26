@@ -51,7 +51,7 @@ public:
 	*/
 	explicit RVNGDirectoryStream(const char *path);
 
-	~RVNGDirectoryStream() override;
+	virtual ~RVNGDirectoryStream();
 
 	/** Create a stream for parent directory of @c path.
 
@@ -68,17 +68,17 @@ public:
 	*/
 	static bool isDirectory(const char *path);
 
-	bool isStructured() override;
-	unsigned subStreamCount() override;
-	const char *subStreamName(unsigned id) override;
-	bool existsSubStream(const char *name) override;
-	RVNGInputStream *getSubStreamByName(const char *name) override;
-	RVNGInputStream *getSubStreamById(unsigned id) override;
+	virtual bool isStructured();
+	virtual unsigned subStreamCount();
+	virtual const char *subStreamName(unsigned id);
+	virtual bool existsSubStream(const char *name);
+	virtual RVNGInputStream *getSubStreamByName(const char *name);
+	virtual RVNGInputStream *getSubStreamById(unsigned id);
 
-	const unsigned char *read(unsigned long numBytes, unsigned long &numBytesRead) override;
-	int seek(long offset, RVNG_SEEK_TYPE seekType) override;
-	long tell() override;
-	bool isEnd() override;
+	virtual const unsigned char *read(unsigned long numBytes, unsigned long &numBytesRead);
+	virtual int seek(long offset, RVNG_SEEK_TYPE seekType);
+	virtual long tell();
+	virtual bool isEnd();
 
 private:
 	RVNGDirectoryStreamImpl *m_impl;

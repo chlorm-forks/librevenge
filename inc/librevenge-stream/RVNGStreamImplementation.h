@@ -33,19 +33,19 @@ class REVENGE_STREAM_API RVNGFileStream: public RVNGInputStream
 {
 public:
 	explicit RVNGFileStream(const char *filename);
-	~RVNGFileStream() override;
+	~RVNGFileStream();
 
-	const unsigned char *read(unsigned long numBytes, unsigned long &numBytesRead) override;
-	long tell() override;
-	int seek(long offset, RVNG_SEEK_TYPE seekType) override;
-	bool isEnd() override;
+	const unsigned char *read(unsigned long numBytes, unsigned long &numBytesRead);
+	long tell();
+	int seek(long offset, RVNG_SEEK_TYPE seekType);
+	bool isEnd();
 
-	bool isStructured() override;
-	unsigned subStreamCount() override;
-	const char *subStreamName(unsigned id) override;
-	bool existsSubStream(const char *name) override;
-	RVNGInputStream *getSubStreamById(unsigned id) override;
-	RVNGInputStream *getSubStreamByName(const char *name) override;
+	bool isStructured();
+	unsigned subStreamCount();
+	const char *subStreamName(unsigned id);
+	bool existsSubStream(const char *name);
+	RVNGInputStream *getSubStreamById(unsigned id);
+	RVNGInputStream *getSubStreamByName(const char *name);
 
 private:
 	RVNGFileStreamPrivate *d;
@@ -59,19 +59,19 @@ class REVENGE_STREAM_API RVNGStringStream: public RVNGInputStream
 {
 public:
 	RVNGStringStream(const unsigned char *data, const unsigned int dataSize);
-	~RVNGStringStream() override;
+	~RVNGStringStream();
 
-	const unsigned char *read(unsigned long numBytes, unsigned long &numBytesRead) override;
-	long tell() override;
-	int seek(long offset, RVNG_SEEK_TYPE seekType) override;
-	bool isEnd() override;
+	const unsigned char *read(unsigned long numBytes, unsigned long &numBytesRead);
+	long tell();
+	int seek(long offset, RVNG_SEEK_TYPE seekType);
+	bool isEnd();
 
-	bool isStructured() override;
-	unsigned subStreamCount() override;
-	const char *subStreamName(unsigned) override;
-	bool existsSubStream(const char *name) override;
-	RVNGInputStream *getSubStreamByName(const char *name) override;
-	RVNGInputStream *getSubStreamById(unsigned) override;
+	bool isStructured();
+	unsigned subStreamCount();
+	const char *subStreamName(unsigned);
+	bool existsSubStream(const char *name);
+	RVNGInputStream *getSubStreamByName(const char *name);
+	RVNGInputStream *getSubStreamById(unsigned);
 
 private:
 	RVNGStringStreamPrivate *d;

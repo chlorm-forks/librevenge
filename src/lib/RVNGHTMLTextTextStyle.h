@@ -107,7 +107,7 @@ public:
 	{
 	}
 	//! destructor
-	~RVNGHTMLTextListStyleManager() override
+	~RVNGHTMLTextListStyleManager()
 	{
 	}
 	//! add a level to the corresponding list

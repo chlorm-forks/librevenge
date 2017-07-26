@@ -36,14 +36,14 @@ class REVENGE_API RVNGPropertyListVector : public RVNGProperty
 public:
 	RVNGPropertyListVector(const RVNGPropertyListVector &);
 	RVNGPropertyListVector();
-	~RVNGPropertyListVector() override;
+	virtual ~RVNGPropertyListVector();
 
 	// RVNGProperty methods
-	int getInt() const override;
-	double getDouble() const override;
-	RVNGUnit getUnit() const override;
-	RVNGString getStr() const override;
-	RVNGProperty *clone() const override;
+	int getInt() const;
+	double getDouble() const;
+	RVNGUnit getUnit() const;
+	RVNGString getStr() const;
+	RVNGProperty *clone() const;
 
 	void append(const RVNGPropertyList &elem);
 	void append(const RVNGPropertyListVector &vec);
