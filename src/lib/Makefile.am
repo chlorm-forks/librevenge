@@ -89,6 +89,14 @@ librevenge_generators_@RVNG_MAJOR_VERSION@_@RVNG_MINOR_VERSION@_include_HEADERS 
 	$(top_srcdir)/inc/librevenge-generators/RVNGTextSpreadsheetGenerator.h \
 	$(top_srcdir)/inc/librevenge-generators/RVNGTextTextGenerator.h
 
+if BUILD_FUZZERS
+librevenge_generators_@RVNG_MAJOR_VERSION@_@RVNG_MINOR_VERSION@_include_HEADERS += \
+	$(top_srcdir)/inc/librevenge-generators/RVNGDummyDrawingGenerator.h \
+	$(top_srcdir)/inc/librevenge-generators/RVNGDummyPresentationGenerator.h \
+	$(top_srcdir)/inc/librevenge-generators/RVNGDummySpreadsheetGenerator.h \
+	$(top_srcdir)/inc/librevenge-generators/RVNGDummyTextGenerator.h
+endif
+
 librevenge_generators_@RVNG_MAJOR_VERSION@_@RVNG_MINOR_VERSION@_la_CPPFLAGS = -DLIBREVENGE_GENERATORS_BUILD
 if HAVE_VISIBILITY
 librevenge_generators_@RVNG_MAJOR_VERSION@_@RVNG_MINOR_VERSION@_la_CPPFLAGS += -DLIBREVENGE_GENERATORS_VISIBILITY
@@ -114,6 +122,14 @@ librevenge_generators_@RVNG_MAJOR_VERSION@_@RVNG_MINOR_VERSION@_la_SOURCES = \
 	RVNGTextPresentationGenerator.cpp \
 	RVNGTextSpreadsheetGenerator.cpp \
 	RVNGTextTextGenerator.cpp
+
+if BUILD_FUZZERS
+librevenge_generators_@RVNG_MAJOR_VERSION@_@RVNG_MINOR_VERSION@_la_SOURCES += \
+	RVNGDummyDrawingGenerator.cpp \
+	RVNGDummyPresentationGenerator.cpp \
+	RVNGDummySpreadsheetGenerator.cpp \
+	RVNGDummyTextGenerator.cpp
+endif
 
 if OS_WIN32
 
