@@ -75,7 +75,7 @@ bool RVNGHTMLTextTableStyleManager::getColumnsWidth(int col, int numSpanned, dou
 	}
 	bool fixed = true;
 	w = 0;
-	for (size_t i=size_t(col); i < size_t(col+numSpanned); i++)
+	for (auto i=size_t(col); i < size_t(col+numSpanned); i++)
 	{
 		if (widths[i] < 0)
 		{
@@ -97,7 +97,7 @@ bool RVNGHTMLTextTableStyleManager::getColumnsWidth(int col, int numSpanned, dou
 std::string RVNGHTMLTextTableStyleManager::getCellClass(RVNGPropertyList const &pList)
 {
 	std::string content=getCellContent(pList);
-	std::map<std::string, std::string>::iterator it=m_cellContentNameMap.find(content);
+	auto it=m_cellContentNameMap.find(content);
 	if (it != m_cellContentNameMap.end())
 		return it->second;
 	std::stringstream s;
@@ -109,7 +109,7 @@ std::string RVNGHTMLTextTableStyleManager::getCellClass(RVNGPropertyList const &
 std::string RVNGHTMLTextTableStyleManager::getRowClass(RVNGPropertyList const &pList)
 {
 	std::string content=getRowContent(pList);
-	std::map<std::string, std::string>::iterator it=m_rowContentNameMap.find(content);
+	auto it=m_rowContentNameMap.find(content);
 	if (it != m_rowContentNameMap.end())
 		return it->second;
 	std::stringstream s;
@@ -120,7 +120,7 @@ std::string RVNGHTMLTextTableStyleManager::getRowClass(RVNGPropertyList const &p
 
 void RVNGHTMLTextTableStyleManager::send(std::ostream &out)
 {
-	std::map<std::string, std::string>::iterator it=m_cellContentNameMap.begin();
+	auto it=m_cellContentNameMap.begin();
 	while (it != m_cellContentNameMap.end())
 	{
 		out << "." << it->second << " " << it->first << "\n";

@@ -99,7 +99,7 @@ void RVNGStringImpl::appendEscapedXML(const char *s, const unsigned long sz)
 	const char *const end = p + sz;
 	while (p != end)
 	{
-		const char *const next = librvng_utf8_next_char(p);
+		const auto *const next = librvng_utf8_next_char(p);
 		if (next > end)
 		{
 			RVNG_DEBUG_MSG(("RVNGStringImpl::appendEscapedXML: oops, we have a problem\n"));
@@ -353,7 +353,7 @@ void RVNGString::Iter::rewind()
 
 bool RVNGString::Iter::next()
 {
-	int len = (int) m_stringImpl->m_buf.length();
+	auto len = (int) m_stringImpl->m_buf.length();
 
 	if (m_pos == (-1))
 		m_pos++;
@@ -380,12 +380,12 @@ const char *RVNGString::Iter::operator()() const
 {
 	if (m_pos == (-1)) return nullptr;
 
-	int charLength =(int)(librvng_utf8_next_char(&(m_stringImpl->m_buf.c_str()[m_pos])) -
-	                      &(m_stringImpl->m_buf.c_str()[m_pos]));
+	auto charLength =(int)(librvng_utf8_next_char(&(m_stringImpl->m_buf.c_str()[m_pos])) -
+	                       &(m_stringImpl->m_buf.c_str()[m_pos]));
 	const int curCharLength = m_curChar ? int(unsigned(std::strlen(m_curChar))) : 0;
 	if (curCharLength < charLength)
 	{
-		char *newChar = new char[charLength+1];
+		auto *newChar = new char[charLength+1];
 		std::swap(m_curChar, newChar);
 		delete[] newChar;
 	}

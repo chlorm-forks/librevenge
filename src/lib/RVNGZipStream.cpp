@@ -432,7 +432,7 @@ RVNGInputStream *RVNGZipStream::getSubstream(RVNGInputStream *input, const char 
 	if (!entry.compressed_size)
 		return nullptr;
 	unsigned long numBytesRead = 0;
-	unsigned char *compressedData = const_cast<unsigned char *>(input->read(entry.compressed_size, numBytesRead));
+	auto *compressedData = const_cast<unsigned char *>(input->read(entry.compressed_size, numBytesRead));
 	if (numBytesRead != entry.compressed_size)
 		return nullptr;
 	if (!entry.compression)

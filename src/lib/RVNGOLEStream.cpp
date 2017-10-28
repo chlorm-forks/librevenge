@@ -188,7 +188,7 @@ public:
 	void setChain(std::vector<unsigned long> chain, unsigned end);
 	void save(unsigned char *buffer) const
 	{
-		unsigned cnt=(unsigned) count();
+		auto cnt=(unsigned) count();
 		unsigned i = 0;
 		for (i = 0; i < cnt; i++)
 			writeU32(buffer + i*4, m_data[i]);
@@ -200,7 +200,7 @@ public:
 	// return space required to save the allocation table
 	unsigned saveSize() const
 	{
-		unsigned cnt=(unsigned)(((count()+127)/128)*128);
+		auto cnt=(unsigned)(((count()+127)/128)*128);
 		return cnt * 4;
 	}
 private:
@@ -619,7 +619,7 @@ protected:
 	size_t getDataAddress(unsigned block, bool isBig) const
 	{
 		if (isBig) return size_t((block+1)*512);
-		size_t bId=size_t(block/8);
+		auto bId=size_t(block/8);
 		if (bId >= m_sb_blocks.size()) throw GenericException();
 		return size_t((m_sb_blocks[bId]+1)*512+64*(block%8));
 	}
@@ -862,7 +862,7 @@ void librevenge::DirEntry::load(unsigned char *buffer, unsigned len)
 
 	// parse name of this entry, which stored as Unicode 16-bit
 	m_name=std::string("");
-	unsigned name_len = (unsigned) readU16(buffer + 0x40);
+	auto name_len = (unsigned) readU16(buffer + 0x40);
 	if (name_len > 64) name_len = 64;
 	if (name_len==2 && m_type==5 && readU16(buffer)==0x5200)
 	{
@@ -899,7 +899,7 @@ void librevenge::DirEntry::save(unsigned char *buffer) const
 	int i = 0;
 	for (i = 0; i < 128; i++) buffer[i]=0;
 
-	unsigned name_len = (unsigned) m_name.length();
+	auto name_len = (unsigned) m_name.length();
 	if (name_len>31) name_len = 31;
 	if (name_len==2 && m_macRootEntry && m_type==5)
 		buffer[1]='R';
@@ -1561,7 +1561,7 @@ librevenge::IStream::IStream(librevenge::IStorage *s, std::string const &name) :
 	}
 
 	// sanity check of stream size
-	const unsigned maxSize = unsigned(blockSize * m_blocks.size());
+	const auto maxSize = unsigned(blockSize * m_blocks.size());
 	if (m_size > maxSize)
 	{
 		RVNG_DEBUG_MSG(("librevenge::IStream::IStream: size %lu is wrong, using an approximated value %u\n", m_size, maxSize));

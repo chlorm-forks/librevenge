@@ -92,7 +92,7 @@ std::string RVNGHTMLTextListStyleManager::List::str() const
 void RVNGHTMLTextListStyleManager::send(std::ostream &out)
 {
 	RVNGHTMLTextParagraphStyleManager::send(out);
-	std::map<std::string, std::string>::iterator it=m_levelNameMap.begin();
+	auto it=m_levelNameMap.begin();
 	while (it != m_levelNameMap.end())
 	{
 		out << "." << it->second << " {\n" << it->first << "}\n";
@@ -103,7 +103,7 @@ void RVNGHTMLTextListStyleManager::send(std::ostream &out)
 std::string RVNGHTMLTextListStyleManager::getClass(RVNGPropertyList const &pList)
 {
 	std::string content=getContent(pList, true);
-	std::map<std::string, std::string>::iterator it=m_contentNameMap.find(content);
+	auto it=m_contentNameMap.find(content);
 	if (it != m_contentNameMap.end())
 		return it->second;
 	std::stringstream s;
@@ -142,7 +142,7 @@ std::string RVNGHTMLTextListStyleManager::openLevel(RVNGPropertyList const &pLis
 		m_idListMap.find(id)->second.openLevel();
 		content+=m_idListMap.find(id)->second.str();
 	}
-	std::map<std::string, std::string>::iterator it=m_levelNameMap.find(content);
+	auto it=m_levelNameMap.find(content);
 	if (it != m_levelNameMap.end())
 		return it->second;
 	std::stringstream s;
@@ -179,7 +179,7 @@ std::string RVNGHTMLTextParagraphStyleManager::getClass(RVNGPropertyList const &
 			return m_idNameMap.find(id)->second;
 	}
 	std::string content=getContent(pList, false);
-	std::map<std::string, std::string>::iterator it=m_contentNameMap.find(content);
+	auto it=m_contentNameMap.find(content);
 	if (it != m_contentNameMap.end())
 		return it->second;
 	std::stringstream s;
@@ -203,7 +203,7 @@ void RVNGHTMLTextParagraphStyleManager::defineParagraph(RVNGPropertyList const &
 
 void RVNGHTMLTextParagraphStyleManager::send(std::ostream &out)
 {
-	std::map<std::string, std::string>::iterator it=m_contentNameMap.begin();
+	auto it=m_contentNameMap.begin();
 	while (it != m_contentNameMap.end())
 	{
 		out << "." << it->second << " {\n" << it->first << "}\n";
@@ -310,7 +310,7 @@ std::string RVNGHTMLTextSpanStyleManager::getClass(RVNGPropertyList const &pList
 	}
 
 	std::string content=getContent(pList);
-	std::map<std::string, std::string>::iterator it=m_contentNameMap.find(content);
+	auto it=m_contentNameMap.find(content);
 	if (it != m_contentNameMap.end())
 		return it->second;
 	std::stringstream s;
@@ -334,7 +334,7 @@ void RVNGHTMLTextSpanStyleManager::defineSpan(RVNGPropertyList const &propList)
 
 void RVNGHTMLTextSpanStyleManager::send(std::ostream &out)
 {
-	std::map<std::string, std::string>::iterator it=m_contentNameMap.begin();
+	auto it=m_contentNameMap.begin();
 	while (it != m_contentNameMap.end())
 	{
 		out << "." << it->second << " " << it->first << "\n";

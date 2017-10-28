@@ -124,7 +124,7 @@ RVNGDirectoryStream *RVNGDirectoryStream::createForParent(const char *const path
 	boost::algorithm::split(splitParent, parent, boost::is_any_of("/"));
 	parent = composePath(splitParent, splitParent.size() ? splitParent.size() - 1 : 0);
 
-	RVNGDirectoryStream *strm = new RVNGDirectoryStream(parent.c_str());
+	auto *strm = new RVNGDirectoryStream(parent.c_str());
 	if (strm->isStructured()) // only if parent is a dir
 		return strm;
 

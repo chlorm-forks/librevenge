@@ -176,7 +176,7 @@ const unsigned char *RVNGFileStream::read(unsigned long numBytes, unsigned long 
 		d->readBufferLength = 0;
 	}
 
-	unsigned long curpos = (unsigned long) tell();
+	auto curpos = (unsigned long) tell();
 	if (curpos == (unsigned long)-1)  // tellg() returned ERROR
 		return nullptr;
 

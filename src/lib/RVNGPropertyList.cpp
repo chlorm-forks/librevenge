@@ -145,7 +145,7 @@ RVNGPropertyListImpl &RVNGPropertyListImpl::operator=(const RVNGPropertyListImpl
 
 const RVNGProperty *RVNGPropertyListImpl::operator[](const char *name) const
 {
-	std::map<std::string, RVNGPropertyListElement>::iterator i = m_map.find(name);
+	auto i = m_map.find(name);
 	if (i != m_map.end())
 		return i->second.m_prop;
 	return nullptr;
@@ -153,7 +153,7 @@ const RVNGProperty *RVNGPropertyListImpl::operator[](const char *name) const
 
 const RVNGPropertyListVector *RVNGPropertyListImpl::child(const char *name) const
 {
-	std::map<std::string, RVNGPropertyListElement>::iterator i = m_map.find(name);
+	auto i = m_map.find(name);
 	if (i != m_map.end())
 	{
 		return i->second.m_vec;
@@ -164,7 +164,7 @@ const RVNGPropertyListVector *RVNGPropertyListImpl::child(const char *name) cons
 
 void RVNGPropertyListImpl::insert(const char *name, RVNGProperty *prop)
 {
-	std::map<std::string, RVNGPropertyListElement>::iterator i = m_map.lower_bound(name);
+	auto i = m_map.lower_bound(name);
 	if (i != m_map.end() && !(m_map.key_comp()(name, i->first)))
 	{
 		delete i->second.m_vec;
@@ -179,7 +179,7 @@ void RVNGPropertyListImpl::insert(const char *name, RVNGProperty *prop)
 
 void RVNGPropertyListImpl::insert(const char *name, RVNGPropertyListVector *vec)
 {
-	std::map<std::string, RVNGPropertyListElement>::iterator i = m_map.lower_bound(name);
+	auto i = m_map.lower_bound(name);
 	if (i != m_map.end() && !(m_map.key_comp()(name, i->first)))
 	{
 		delete i->second.m_prop;
@@ -194,7 +194,7 @@ void RVNGPropertyListImpl::insert(const char *name, RVNGPropertyListVector *vec)
 
 void RVNGPropertyListImpl::remove(const char *name)
 {
-	std::map<std::string, RVNGPropertyListElement>::iterator i = m_map.find(name);
+	auto i = m_map.find(name);
 	if (i != m_map.end())
 	{
 		m_map.erase(i);
