@@ -360,6 +360,7 @@ public:
 	\li \c fo:break-before Whether this table should be placed in a new column or page (the value is set to column or page if so)
 	\li \c librevenge:table-columns Column definitions for the table. May contain
 	    -# \c style:column-width Width of a column, in inches
+	    -# \c style:rel-column-width Relative width of a column
 	*/
 	virtual void openTable(const RVNGPropertyList &propList) = 0;
 	/**
