@@ -150,7 +150,7 @@ public:
 	/**
 	Called when a binary/raster object should be inserted
 	\param propList Defines a set of properties for the object. May contain:
-	\li \c librevenge:mimetype The mimetype of the object
+	\li \c librevenge:mime-type The mimetype of the object
 	\li \c office:binary-data The object data
 	\li \c librevenge:replacement-objects A property list vector containing alternative representations of the content. Every element is a property list containing:
 	    -# \c librevenge:mime-type The mimetype of the replacement object
