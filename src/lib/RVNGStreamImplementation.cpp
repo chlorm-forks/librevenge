@@ -97,7 +97,8 @@ RVNGStringStreamPrivate::RVNGStringStreamPrivate(const unsigned char *data, unsi
 	streamNameList()
 
 {
-	memcpy(&buffer[0], data, dataSize);
+	if (dataSize != 0)
+		memcpy(&buffer[0], data, dataSize);
 }
 
 RVNGStringStreamPrivate::~RVNGStringStreamPrivate()
