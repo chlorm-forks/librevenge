@@ -161,7 +161,7 @@ void RVNGBinaryData::appendBase64Data(const RVNGString &base64)
 	std::vector<unsigned char> buffer;
 	convertFromBase64(buffer, base64String);
 	if (!buffer.empty())
-		append(&buffer[0], buffer.size());
+		append(buffer.data(), buffer.size());
 }
 
 void RVNGBinaryData::appendBase64Data(const char *base64)
@@ -173,7 +173,7 @@ void RVNGBinaryData::appendBase64Data(const char *base64)
 		std::vector<unsigned char> buffer;
 		convertFromBase64(buffer, base64String);
 		if (!buffer.empty())
-			append(&buffer[0], buffer.size());
+			append(buffer.data(), buffer.size());
 	}
 }
 
@@ -223,7 +223,7 @@ const unsigned char *RVNGBinaryData::getDataBuffer() const
 {
 	if (m_binaryDataImpl->m_ptr->m_buf.empty())
 		return nullptr;
-	return &(m_binaryDataImpl->m_ptr->m_buf[0]);
+	return m_binaryDataImpl->m_ptr->m_buf.data();
 }
 
 const RVNGString RVNGBinaryData::getBase64Data() const
@@ -242,7 +242,7 @@ RVNGInputStream *RVNGBinaryData::getDataStream() const
 	}
 	if (data->m_buf.empty())
 		return nullptr;
-	data->m_stream.reset(new RVNGMemoryInputStream(&(data->m_buf[0]), data->m_buf.size()));
+	data->m_stream.reset(new RVNGMemoryInputStream(data->m_buf.data(), data->m_buf.size()));
 	return data->m_stream.get();
 }
 

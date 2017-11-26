@@ -458,12 +458,12 @@ RVNGInputStream *RVNGZipStream::getSubstream(RVNGInputStream *input, const char 
 
 		strm.avail_in = (unsigned)numBytesRead;
 		strm.next_in = (Bytef *)compressedData;
-		strm.next_out = &data[0];
+		strm.next_out = data.data();
 
 		bool done = false;
 		while (!done)
 		{
-			const std::ptrdiff_t nextOutIndex = strm.next_out - &data[0];
+			const std::ptrdiff_t nextOutIndex = strm.next_out - data.data();
 			assert(nextOutIndex >= 0);
 			data.resize(data.size() + blockSize);
 			assert(data.size() > std::size_t(nextOutIndex));
@@ -490,7 +490,7 @@ RVNGInputStream *RVNGZipStream::getSubstream(RVNGInputStream *input, const char 
 
 		if (strm.total_out == 0)
 			return nullptr;
-		return new RVNGStringStream(&data[0], (unsigned int) strm.total_out);
+		return new RVNGStringStream(data.data(), (unsigned int) strm.total_out);
 	}
 }
 

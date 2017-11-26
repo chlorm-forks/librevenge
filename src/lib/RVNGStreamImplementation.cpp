@@ -98,7 +98,7 @@ RVNGStringStreamPrivate::RVNGStringStreamPrivate(const unsigned char *data, unsi
 
 {
 	if (dataSize != 0)
-		memcpy(&buffer[0], data, dataSize);
+		memcpy(buffer.data(), data, dataSize);
 }
 
 RVNGStringStreamPrivate::~RVNGStringStreamPrivate()
@@ -361,7 +361,7 @@ RVNGInputStream *RVNGFileStream::getSubStreamByName(const char *name)
 
 		std::vector<unsigned char> buf(tmpStream.size());
 		unsigned long tmpLength;
-		tmpLength = tmpStream.read(&buf[0], tmpStream.size());
+		tmpLength = tmpStream.read(buf.data(), tmpStream.size());
 
 		// sanity check
 		if (tmpLength != tmpStream.size())
@@ -369,7 +369,7 @@ RVNGInputStream *RVNGFileStream::getSubStreamByName(const char *name)
 			   resulting buffer */
 			return (RVNGInputStream *)nullptr;
 
-		return new RVNGStringStream(&buf[0], (unsigned)tmpLength);
+		return new RVNGStringStream(buf.data(), (unsigned)tmpLength);
 	}
 	else if (d->streamType == ZIP)
 	{
@@ -538,7 +538,7 @@ RVNGInputStream *RVNGStringStream::getSubStreamByName(const char *name)
 
 		std::vector<unsigned char> buf(tmpStream.size());
 		unsigned long tmpLength;
-		tmpLength = tmpStream.read(&buf[0], tmpStream.size());
+		tmpLength = tmpStream.read(buf.data(), tmpStream.size());
 
 		// sanity check
 		if (tmpLength != tmpStream.size())
@@ -546,7 +546,7 @@ RVNGInputStream *RVNGStringStream::getSubStreamByName(const char *name)
 			   resulting buffer */
 			return (RVNGInputStream *)nullptr;
 
-		return new RVNGStringStream(&buf[0], (unsigned)tmpLength);
+		return new RVNGStringStream(buf.data(), (unsigned)tmpLength);
 	}
 	else if (d->streamType == ZIP)
 		return RVNGZipStream::getSubstream(this, name);

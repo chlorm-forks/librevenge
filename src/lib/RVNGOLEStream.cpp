@@ -1222,7 +1222,7 @@ void librevenge::IStorage::load()
 				sector = m_header.m_start_mbat;
 			else      // next meta bat location is the last current block value.
 				sector = blocks[--k];
-			unsigned long readData=loadBigBlock(sector, &buffer2[0], m_bbat.m_blockSize);
+			unsigned long readData=loadBigBlock(sector, buffer2.data(), m_bbat.m_blockSize);
 			for (unsigned s=0; s < m_bbat.m_blockSize; s+=4)
 			{
 				// check that for maximum block and that the data are correctly read
@@ -1236,8 +1236,8 @@ void librevenge::IStorage::load()
 	if (blocks.size()*m_bbat.m_blockSize > 0)
 	{
 		std::vector<unsigned char> buffer(blocks.size()*m_bbat.m_blockSize);
-		unsigned long readData=loadBigBlocks(blocks, &buffer[0], buffer.size());
-		m_bbat.load(&buffer[0], (unsigned)readData);
+		unsigned long readData=loadBigBlocks(blocks, buffer.data(), buffer.size());
+		m_bbat.load(buffer.data(), (unsigned)readData);
 	}
 
 	// load small bat
@@ -1246,8 +1246,8 @@ void librevenge::IStorage::load()
 	if (blocks.size()*m_bbat.m_blockSize > 0)
 	{
 		std::vector<unsigned char> buffer(blocks.size()*m_bbat.m_blockSize);
-		unsigned long readData=loadBigBlocks(blocks, &buffer[0], buffer.size());
-		m_sbat.load(&buffer[0], (unsigned)readData);
+		unsigned long readData=loadBigBlocks(blocks, buffer.data(), buffer.size());
+		m_sbat.load(buffer.data(), (unsigned)readData);
 	}
 
 	// load directory tree
@@ -1256,8 +1256,8 @@ void librevenge::IStorage::load()
 	if (blocks.size()*m_bbat.m_blockSize > 0)
 	{
 		std::vector<unsigned char> buffer(blocks.size()*m_bbat.m_blockSize);
-		unsigned long readData=loadBigBlocks(blocks, &buffer[0], buffer.size());
-		m_dirtree.load(&buffer[0], (unsigned)readData);
+		unsigned long readData=loadBigBlocks(blocks, buffer.data(), buffer.size());
+		m_dirtree.load(buffer.data(), (unsigned)readData);
 		if (readData >= 0x74 + 4)
 		{
 			unsigned sb_start = readU32(&buffer[0x74]);
@@ -1333,7 +1333,7 @@ unsigned long librevenge::IStorage::loadSmallBlocks(std::vector<unsigned long> c
 		unsigned long bbindex = pos / m_bbat.m_blockSize;
 		if (bbindex >= m_sb_blocks.size()) break;
 
-		unsigned long readData=loadBigBlock(m_sb_blocks[ bbindex ], &tmpBuf[0], m_bbat.m_blockSize);
+		unsigned long readData=loadBigBlock(m_sb_blocks[ bbindex ], tmpBuf.data(), m_bbat.m_blockSize);
 
 		// copy the data
 		unsigned long offset = pos % m_bbat.m_blockSize;
@@ -1407,9 +1407,9 @@ bool librevenge::OStorage::updateToSave()
 	{
 		// FIXME: set m_header.m_start_sbat
 		buffer.resize(sbatSize);
-		m_sbat.save(&buffer[0]);
+		m_sbat.save(buffer.data());
 		m_header.m_num_sbat = (unsigned)(sbatSize+511)/512;
-		m_header.m_start_sbat = insertData(&buffer[0], sbatSize, true, unsigned(Eof));
+		m_header.m_start_sbat = insertData(buffer.data(), sbatSize, true, unsigned(Eof));
 		if (m_sb_blocks.size())
 		{
 			rEntry->m_start =(unsigned) m_sb_blocks[0];
@@ -1419,8 +1419,8 @@ bool librevenge::OStorage::updateToSave()
 	}
 	// then add dirtree
 	buffer.resize(dirSize);
-	m_dirtree.save(&buffer[0]);
-	m_header.m_start_dirent=insertData(&buffer[0], dirSize, true, unsigned(Eof));
+	m_dirtree.save(buffer.data());
+	m_header.m_start_dirent=insertData(buffer.data(), dirSize, true, unsigned(Eof));
 
 	// now update the big alloc table to add size for self and for the meta data
 	unsigned numBBlock = m_num_bbat;
@@ -1455,8 +1455,8 @@ bool librevenge::OStorage::updateToSave()
 	if (bbatSize)
 	{
 		buffer.resize(bbatSize);
-		m_bbat.save(&buffer[0]);
-		insertData(&buffer[0], bbatSize, true, unsigned(Bat));
+		m_bbat.save(buffer.data());
+		insertData(buffer.data(), bbatSize, true, unsigned(Bat));
 	}
 
 	for (b = 0; b < numBAlloc; b++)
@@ -1484,7 +1484,7 @@ bool librevenge::OStorage::updateToSave()
 			writeU32(&buffer[wPos], Avail);
 			wPos+=4;
 		}
-		m_header.m_start_mbat = insertData((unsigned char const *)&buffer[0], 512*numMAlloc, true, unsigned(Eof));
+		m_header.m_start_mbat = insertData((unsigned char const *)buffer.data(), 512*numMAlloc, true, unsigned(Eof));
 		m_header.m_start_mbat = numBBlock+numBAlloc;
 	}
 	m_header.m_num_bat = (m_num_bbat+127)/128;
@@ -1492,7 +1492,7 @@ bool librevenge::OStorage::updateToSave()
 
 	m_data.resize((m_num_bbat+1)*512,0);
 	// save the header
-	m_header.save(&m_data[0]);
+	m_header.save(m_data.data());
 	return true;
 }
 
@@ -1513,7 +1513,7 @@ unsigned librevenge::OStorage::insertData(unsigned char const *buffer, unsigned 
 		chain.push_back(block);
 		size_t wPos = getDataAddress(block, useBigBlock);
 		unsigned long wSize = len > bSize ? bSize : len;
-		memcpy(&m_data[wPos], &buffer[0], wSize);
+		memcpy(&m_data[wPos], buffer, wSize);
 		buffer += bSize;
 		len -= wSize;
 	}
@@ -1604,7 +1604,7 @@ unsigned long librevenge::IStream::readUsingStorage(unsigned long pos, unsigned 
 		while (totalbytes < maxlen)
 		{
 			if (index >= m_blocks.size()) break;
-			m_iStorage->loadSmallBlock(m_blocks[index], &buf[0], m_iStorage->m_bbat.m_blockSize);
+			m_iStorage->loadSmallBlock(m_blocks[index], buf.data(), m_iStorage->m_bbat.m_blockSize);
 			unsigned long count = sBlockSize - offset;
 			if (count > maxlen-totalbytes) count = maxlen-totalbytes;
 			memcpy(data+totalbytes, &buf[offset], count);
@@ -1626,7 +1626,7 @@ unsigned long librevenge::IStream::readUsingStorage(unsigned long pos, unsigned 
 		while (totalbytes < maxlen)
 		{
 			if (index >= m_blocks.size()) break;
-			m_iStorage->loadBigBlock(m_blocks[index], &buf[0], bBlockSize);
+			m_iStorage->loadBigBlock(m_blocks[index], buf.data(), bBlockSize);
 			unsigned long count = bBlockSize - offset;
 			if (count > maxlen-totalbytes) count = maxlen-totalbytes;
 			memcpy(data+totalbytes, &buf[offset], count);
@@ -1702,9 +1702,9 @@ bool librevenge::IStream::createOleFromDirectory(IStorage *io, std::string const
 			{
 				// a test because empty file are rare but seems to exists
 				buffer.resize(sz);
-				ok = leafStream.read(&buffer[0], sz) == sz;
+				ok = leafStream.read(buffer.data(), sz) == sz;
 				if (ok)
-					ok=storage.addStream(nodes[l], &buffer[0], sz);
+					ok=storage.addStream(nodes[l], buffer.data(), sz);
 			}
 			else
 			{
