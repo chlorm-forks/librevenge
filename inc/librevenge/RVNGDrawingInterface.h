@@ -150,6 +150,9 @@ public:
 	    -# \c librevenge:mime-type The mimetype of the replacement object
 	    -# \c office:binary-data The replacement object data
 	\li \c librevenge:replacement-text A string containing a text representation of the content.
+
+	\note to insert a MathMl file, set the mimetype value to "application/mathml-presentation+xml"
+	   or "application/mathml+xml".
 	*/
 	virtual void drawGraphicObject(const RVNGPropertyList &propList) = 0;
 

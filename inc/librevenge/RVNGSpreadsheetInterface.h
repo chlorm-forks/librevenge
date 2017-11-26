@@ -580,7 +580,7 @@ public:
 	/**
 	Called when a mathml object should be inserted
 	\param propList Defines a set of properties for the object.
-	\li \c librevenge:mime-type The mimetype of the object
+	\li \c librevenge:mime-type The mimetype of the object ; its value may be "application/mathml-presentation+xml" or "application/mathml+xml"
 	\li \c librevenge:data reference to the string containing the equation representation
 	*/
 	virtual void insertEquation(const RVNGPropertyList &propList) = 0;
