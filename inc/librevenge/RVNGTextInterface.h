@@ -45,6 +45,7 @@ public:
 	Called when all document metadata should be set. This is always the first callback made.
 	\param propList Property list for the metadata. May contain:
 	\li \c dc:creator
+	\li \c dc:identifier The document's unique identifier
 	\li \c dc:language The document's keywords
 	\li \c dc:publisher The document's publisher
 	\li \c dc:source
@@ -94,7 +95,9 @@ public:
 	\li \c meta:creation-date Document creation date
 	\li \c meta:initial-creator The document's author
 	\li \c meta:keyword The document's keywords
-	\li \c
+	\li \c librevenge:cover-images List of cover image definitions for the document. The list typically contains one item. Each cover image may contain:
+	    -# \c librevenge:mime-type The mimetype of the image
+	    -# \c office:binary-data The image data
 	*/
 	virtual void setDocumentMetaData(const RVNGPropertyList &propList) = 0;
 
@@ -119,6 +122,8 @@ public:
 	\li \c librevenge:replacement-objects A property list vector containing alternative formats of the font. Every element is a property list containing:
 	    -# \c librevenge:mime-type The mimetype of the replacement object
 	    -# \c office:binary-data The replacement object data
+	\li \c librevenge:font-style The font style ("italic" or "normal")
+	\li \c librevenge:font-weight The font weight ("bold" or "normal")
 	*/
 	virtual void defineEmbeddedFont(const RVNGPropertyList &propList) = 0;
 
@@ -200,6 +205,8 @@ public:
 	\param propList Defines a set of properties for the link. May contain:
 	\li \c xlink:type .
 	\li \c xlink:href .
+	\li \c office:binary-data The data of the linked content when xlink:href is omitted.
+	\li \c librevenge:mime-type The mimetype of the linked content when xlink:href is omitted.
 	*/
 	virtual void openLink(const RVNGPropertyList &propList) = 0;
 	/**
