@@ -157,8 +157,8 @@ void RVNGBinaryData::append(const RVNGBinaryData &data)
 
 	unsigned long previousSize = m_binaryDataImpl->m_ptr->m_buf.size();
 	m_binaryDataImpl->m_ptr->m_buf.reserve(previousSize + data.m_binaryDataImpl->m_ptr->m_buf.size());
-	for (unsigned long i = 0; i < data.m_binaryDataImpl->m_ptr->m_buf.size(); i++)
-		m_binaryDataImpl->m_ptr->m_buf.push_back(data.m_binaryDataImpl->m_ptr->m_buf[i]);
+	const auto &src = data.m_binaryDataImpl->m_ptr->m_buf;
+	std::copy(src.begin(), src.end(), std::back_inserter(m_binaryDataImpl->m_ptr->m_buf));
 }
 
 void RVNGBinaryData::appendBase64Data(const RVNGString &base64)
