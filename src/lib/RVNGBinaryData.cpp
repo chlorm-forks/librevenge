@@ -134,14 +134,16 @@ RVNGBinaryData::RVNGBinaryData(const RVNGString &base64) :
 }
 
 RVNGBinaryData::RVNGBinaryData(const char *base64) :
-	m_binaryDataImpl(new RVNGBinaryDataImpl)
+	m_binaryDataImpl(nullptr)
 {
+	std::unique_ptr<RVNGBinaryDataImpl> impl(new RVNGBinaryDataImpl());
 	if (base64)
 	{
 		std::string base64String(base64);
 		boost::trim(base64String);
-		convertFromBase64(m_binaryDataImpl->m_ptr->m_buf, base64String);
+		convertFromBase64(impl->m_ptr->m_buf, base64String);
 	}
+	m_binaryDataImpl = impl.release();
 }
 
 void RVNGBinaryData::append(const RVNGBinaryData &data)
