@@ -1791,7 +1791,7 @@ librevenge::Stream::Stream(librevenge::Storage *storage, const std::string &name
 // FIXME tell parent we're gone
 librevenge::Stream::~Stream()
 {
-	if (m_io) delete m_io;
+	delete m_io;
 }
 
 unsigned long librevenge::Stream::size()

@@ -102,8 +102,7 @@ RVNGPropertyListVector::RVNGPropertyListVector() :
 
 RVNGPropertyListVector::~RVNGPropertyListVector()
 {
-	if (m_impl)
-		delete m_impl;
+	delete m_impl;
 }
 
 int RVNGPropertyListVector::getInt() const

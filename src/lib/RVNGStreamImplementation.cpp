@@ -139,8 +139,7 @@ RVNGFileStream::RVNGFileStream(const char *filename) :
 
 RVNGFileStream::~RVNGFileStream()
 {
-	if (d)
-		delete d;
+	delete d;
 }
 
 #define BUFFER_MAX 65536
