@@ -121,10 +121,7 @@ RVNGBinaryData::RVNGBinaryData(const unsigned char *buffer, const unsigned long 
 {
 	std::unique_ptr<RVNGBinaryDataImpl> impl(new RVNGBinaryDataImpl());
 	if (buffer)
-	{
-		impl->m_ptr->m_buf.reserve(bufferSize);
-		std::copy(buffer, buffer + bufferSize, std::back_inserter(impl->m_ptr->m_buf));
-	}
+		impl->m_ptr->m_buf.assign(buffer, buffer + bufferSize);
 	m_binaryDataImpl = impl.release();
 }
 
