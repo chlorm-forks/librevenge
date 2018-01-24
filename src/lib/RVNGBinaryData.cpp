@@ -23,6 +23,8 @@
 #include <boost/archive/iterators/remove_whitespace.hpp>
 #include <boost/archive/iterators/transform_width.hpp>
 
+#include <algorithm>
+#include <iterator>
 #include <memory>
 #include <vector>
 #include <string>
@@ -120,9 +122,8 @@ RVNGBinaryData::RVNGBinaryData(const unsigned char *buffer, const unsigned long 
 	std::unique_ptr<RVNGBinaryDataImpl> impl(new RVNGBinaryDataImpl());
 	if (buffer)
 	{
-		impl->m_ptr->m_buf = std::vector<unsigned char> (bufferSize);
-		for (unsigned long i = 0; i < bufferSize; i++)
-			impl->m_ptr->m_buf[i] = buffer[i];
+		impl->m_ptr->m_buf.reserve(bufferSize);
+		std::copy(buffer, buffer + bufferSize, std::back_inserter(impl->m_ptr->m_buf));
 	}
 	m_binaryDataImpl = impl.release();
 }
