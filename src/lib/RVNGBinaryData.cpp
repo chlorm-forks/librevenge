@@ -115,22 +115,26 @@ RVNGBinaryData::RVNGBinaryData(const RVNGBinaryData &data) :
 }
 
 RVNGBinaryData::RVNGBinaryData(const unsigned char *buffer, const unsigned long bufferSize) :
-	m_binaryDataImpl(new RVNGBinaryDataImpl)
+	m_binaryDataImpl(nullptr)
 {
+	std::unique_ptr<RVNGBinaryDataImpl> impl(new RVNGBinaryDataImpl());
 	if (buffer)
 	{
-		m_binaryDataImpl->m_ptr->m_buf = std::vector<unsigned char> (bufferSize);
+		impl->m_ptr->m_buf = std::vector<unsigned char> (bufferSize);
 		for (unsigned long i = 0; i < bufferSize; i++)
-			m_binaryDataImpl->m_ptr->m_buf[i] = buffer[i];
+			impl->m_ptr->m_buf[i] = buffer[i];
 	}
+	m_binaryDataImpl = impl.release();
 }
 
 RVNGBinaryData::RVNGBinaryData(const RVNGString &base64) :
-	m_binaryDataImpl(new RVNGBinaryDataImpl)
+	m_binaryDataImpl(nullptr)
 {
+	std::unique_ptr<RVNGBinaryDataImpl> impl(new RVNGBinaryDataImpl());
 	std::string base64String(base64.cstr(), base64.size());
 	boost::trim(base64String);
-	convertFromBase64(m_binaryDataImpl->m_ptr->m_buf, base64String);
+	convertFromBase64(impl->m_ptr->m_buf, base64String);
+	m_binaryDataImpl = impl.release();
 }
 
 RVNGBinaryData::RVNGBinaryData(const char *base64) :
