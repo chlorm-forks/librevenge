@@ -1746,9 +1746,8 @@ bool librevenge::IStream::createOleFromDirectory(IStorage *io, std::string const
 // =========== Storage ==========
 
 librevenge::Storage::Storage(RVNGInputStream *is) :
-	m_io(nullptr)
+	m_io(new IStorage(is))
 {
-	m_io = new IStorage(is);
 }
 
 librevenge::Storage::~Storage()
@@ -1785,9 +1784,8 @@ std::vector<std::string> librevenge::Storage::getSubStreamNamesList()
 // =========== Stream ==========
 
 librevenge::Stream::Stream(librevenge::Storage *storage, const std::string &name) :
-	m_io(nullptr)
+	m_io(new librevenge::IStream(storage->m_io, name))
 {
-	m_io = new librevenge::IStream(storage->m_io, name);
 }
 
 // FIXME tell parent we're gone
