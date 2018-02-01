@@ -281,7 +281,7 @@ std::string RVNGHTMLTextParagraphStyleManager::getContent(RVNGPropertyList const
 
 void RVNGHTMLTextParagraphStyleManager::parseBorders(RVNGPropertyList const &pList, std::ostream &out) const
 {
-	static char const *(type[]) = {"border", "border-left", "border-top", "border-right", "border-bottom" };
+	static char const *type[] = {"border", "border-left", "border-top", "border-right", "border-bottom" };
 	for (int i = 0; i < 5; i++)
 	{
 		std::string field("fo:");

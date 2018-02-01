@@ -169,7 +169,7 @@ std::string RVNGHTMLTextTableStyleManager::getCellContent(RVNGPropertyList const
 	if (pList["fo:background-color"])
 		s << "\tbackground-color:" << pList["fo:background-color"]->getStr().cstr() << ";\n";
 
-	static char const *(type[]) = {"border", "border-left", "border-top", "border-right", "border-bottom" };
+	static char const *type[] = {"border", "border-left", "border-top", "border-right", "border-bottom" };
 	for (auto &i : type)
 	{
 		std::string field("fo:");
