@@ -140,6 +140,8 @@ public:
 	\li \c fo:margin-right The right margin for each page in the span, in inches
 	\li \c fo:margin-top The top margin for each page in the span, in inches
 	\li \c fo:margin-bottom The bottom margin for each page in the span, in inches
+	\li \c librevenge:chapter-names A property list vector containing starting chapters. Every element is a property list containing:
+	    -# \c librevenge:name The title of the chapter
 	*/
 	virtual void openPageSpan(const RVNGPropertyList &propList) = 0;
 	/**
