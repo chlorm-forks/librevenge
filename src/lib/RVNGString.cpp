@@ -24,6 +24,7 @@
 
 #include <cassert>
 #include <cstring>
+#include <memory>
 #include <string>
 #include <stdarg.h>
 #include <stdio.h>
@@ -224,6 +225,7 @@ void RVNGString::sprintf(const char *format, ...)
 
 	int bufsize = FIRST_BUF_SIZE;
 	char firstBuffer[FIRST_BUF_SIZE];
+	std::unique_ptr<char[]> workBuffer;
 	char *buf = firstBuffer;
 
 	while (true)
@@ -239,15 +241,12 @@ void RVNGString::sprintf(const char *format, ...)
 		else
 			break;
 
-		if (buf != firstBuffer)
-			delete [] buf;
-		buf = new char[bufsize];
+		workBuffer.reset(new char[bufsize]);
+		buf = workBuffer.get();
 	}
 
 	clear();
 	append(buf);
-	if (buf != firstBuffer)
-		delete [] buf;
 }
 
 void RVNGString::append(const RVNGString &s)
