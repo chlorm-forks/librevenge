@@ -32,6 +32,7 @@
 #ifndef RVNGOLESTREAM_H
 #define RVNGOLESTREAM_H
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -79,7 +80,7 @@ public:
 	Result result();
 
 private:
-	IStorage *m_io;
+	std::unique_ptr<IStorage> m_io;
 
 	// no copy or assign
 	Storage(const Storage &);
@@ -115,7 +116,7 @@ public:
 	unsigned long read(unsigned char *data, unsigned long maxlen);
 
 private:
-	IStream *m_io;
+	std::unique_ptr<IStream> m_io;
 
 	// no copy or assign
 	Stream(const Stream &);

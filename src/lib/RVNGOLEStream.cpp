@@ -1752,7 +1752,6 @@ librevenge::Storage::Storage(RVNGInputStream *is) :
 
 librevenge::Storage::~Storage()
 {
-	delete m_io;
 }
 
 librevenge::Storage::Result librevenge::Storage::result()
@@ -1784,14 +1783,13 @@ std::vector<std::string> librevenge::Storage::getSubStreamNamesList()
 // =========== Stream ==========
 
 librevenge::Stream::Stream(librevenge::Storage *storage, const std::string &name) :
-	m_io(new librevenge::IStream(storage->m_io, name))
+	m_io(new librevenge::IStream(storage->m_io.get(), name))
 {
 }
 
 // FIXME tell parent we're gone
 librevenge::Stream::~Stream()
 {
-	delete m_io;
 }
 
 unsigned long librevenge::Stream::size()
