@@ -63,9 +63,8 @@ static double getInchValue(librevenge::RVNGProperty const &prop)
 
 static std::string doubleToString(const double value)
 {
-	RVNGProperty *prop = RVNGPropertyFactory::newDoubleProp(value);
+	std::unique_ptr<RVNGProperty> prop{RVNGPropertyFactory::newDoubleProp(value)};
 	std::string retVal = prop->getStr().cstr();
-	delete prop;
 	return retVal;
 }
 
