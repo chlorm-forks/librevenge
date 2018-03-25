@@ -20,6 +20,8 @@
  * applicable instead of those above.
  */
 
+#include "RVNGHTMLTextTextStyle.h"
+
 #include <string.h>
 
 #include <cstring>
@@ -29,8 +31,6 @@
 #include <librevenge/librevenge.h>
 
 #include "librevenge_internal.h"
-
-#include "RVNGHTMLTextTextStyle.h"
 
 namespace librevenge
 {

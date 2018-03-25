@@ -18,9 +18,9 @@
  * applicable instead of those above.
  */
 
-#include <stdio.h>
-
 #include <librevenge-generators/librevenge-generators.h>
+
+#include <stdio.h>
 
 #include "RVNGRawGeneratorBase.h"
 

@@ -18,6 +18,8 @@
  * applicable instead of those above.
  */
 
+#include <librevenge/librevenge.h>
+
 #include "librevenge_internal.h"
 
 #include <cassert>

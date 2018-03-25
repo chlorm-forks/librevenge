@@ -18,9 +18,9 @@
  * applicable instead of those above.
  */
 
-#include <sstream>
-
 #include <librevenge-generators/librevenge-generators.h>
+
+#include <sstream>
 
 // use the BELL code to represent a TAB for now
 #define UCS_TAB 0x0009

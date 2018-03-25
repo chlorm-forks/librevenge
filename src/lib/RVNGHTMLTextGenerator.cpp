@@ -20,6 +20,8 @@
  * applicable instead of those above.
  */
 
+#include <librevenge-generators/librevenge-generators.h>
+
 #include <cassert>
 #include <cstring>
 #include <fstream>
@@ -28,8 +30,6 @@
 
 #include "RVNGHTMLTextTableStyle.h"
 #include "RVNGHTMLTextTextStyle.h"
-
-#include <librevenge-generators/librevenge-generators.h>
 
 #include "librevenge_internal.h"
 

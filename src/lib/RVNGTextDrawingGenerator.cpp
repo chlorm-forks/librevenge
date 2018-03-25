@@ -12,10 +12,9 @@
  * applicable instead of those above.
  */
 
-#include <sstream>
-
-#include <librevenge/librevenge.h>
 #include <librevenge-generators/librevenge-generators.h>
+
+#include <sstream>
 
 namespace librevenge
 {

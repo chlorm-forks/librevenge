@@ -18,10 +18,10 @@
  * applicable instead of those above.
  */
 
+#include <librevenge-generators/librevenge-generators.h>
+
 #include <iomanip>
 #include <sstream>
-
-#include <librevenge-generators/librevenge-generators.h>
 
 #include "librevenge_internal.h"
 

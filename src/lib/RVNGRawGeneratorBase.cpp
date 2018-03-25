@@ -18,12 +18,12 @@
  * applicable instead of those above.
  */
 
+#include "RVNGRawGeneratorBase.h"
+
 #include <stdarg.h>
 #include <stdio.h>
 #include <map>
 #include <string>
-
-#include "RVNGRawGeneratorBase.h"
 
 namespace librevenge
 {

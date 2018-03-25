@@ -41,6 +41,8 @@
  This file taken from libwpg RVNGOLEStream.cpp 1.5 Thu Aug 17 21:21:30 2006
 */
 
+#include "RVNGOLEStream.h"
+
 #include <string.h>
 #include <ctype.h>
 
@@ -56,8 +58,6 @@
 #include <librevenge-stream/librevenge-stream.h>
 
 #include "librevenge_internal.h"
-
-#include "RVNGOLEStream.h"
 
 namespace librevenge
 {

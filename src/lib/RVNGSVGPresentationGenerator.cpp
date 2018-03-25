@@ -12,6 +12,8 @@
  * applicable instead of those above.
  */
 
+#include <librevenge-generators/librevenge-generators.h>
+
 #include <locale.h>
 
 #include <iostream>
@@ -20,8 +22,6 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
-#include <librevenge-generators/librevenge-generators.h>
 
 #include "librevenge_internal.h"
 

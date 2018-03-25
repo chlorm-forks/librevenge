@@ -20,14 +20,14 @@
  * applicable instead of those above.
  */
 
+#include "RVNGHTMLTextTableStyle.h"
+
 #include <iostream>
 #include <sstream>
 
 #include <librevenge/librevenge.h>
 
 #include "librevenge_internal.h"
-
-#include "RVNGHTMLTextTableStyle.h"
 
 namespace librevenge
 {

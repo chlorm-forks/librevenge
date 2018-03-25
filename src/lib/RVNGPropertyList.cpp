@@ -19,13 +19,13 @@
  * applicable instead of those above.
  */
 
+#include <librevenge/librevenge.h>
+
 #include <map>
 #include <string>
 #include <utility>
 
 #include <boost/spirit/include/qi.hpp>
-
-#include <librevenge/librevenge.h>
 
 namespace
 {

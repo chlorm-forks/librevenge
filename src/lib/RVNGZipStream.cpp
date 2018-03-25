@@ -17,6 +17,8 @@
  * applicable instead of those above.
  */
 
+#include "RVNGZipStream.h"
+
 #include <algorithm>
 #include <cassert>
 #include <string>
@@ -25,7 +27,6 @@
 #include <utility>
 
 #include <zlib.h>
-#include "RVNGZipStream.h"
 #include <librevenge-stream/librevenge-stream.h>
 
 namespace librevenge

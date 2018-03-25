@@ -18,6 +18,8 @@
  * applicable instead of those above.
  */
 
+#include <librevenge-stream/librevenge-stream.h>
+
 #include <limits>
 #include <string>
 #include <vector>
@@ -27,7 +29,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <librevenge-stream/librevenge-stream.h>
 #include "RVNGOLEStream.h"
 #include "RVNGZipStream.h"
 

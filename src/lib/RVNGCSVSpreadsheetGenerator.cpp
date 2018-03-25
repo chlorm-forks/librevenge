@@ -18,13 +18,13 @@
  * applicable instead of those above.
  */
 
+#include <librevenge-generators/librevenge-generators.h>
+
 #include <time.h>
 
 #include <string>
 #include <sstream>
 #include <vector>
-
-#include <librevenge-generators/librevenge-generators.h>
 
 #include "librevenge_internal.h"
 

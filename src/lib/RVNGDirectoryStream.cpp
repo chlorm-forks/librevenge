@@ -19,11 +19,12 @@
  * applicable instead of those above.
  */
 
+#include <librevenge-stream/librevenge-stream.h>
+
 #include <sys/stat.h>
 #include <string>
 #include <vector>
 #include <boost/algorithm/string.hpp>
-#include <librevenge-stream/librevenge-stream.h>
 
 namespace librevenge
 {
