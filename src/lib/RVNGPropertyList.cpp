@@ -22,6 +22,7 @@
 #include <librevenge/librevenge.h>
 
 #include <map>
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -106,17 +107,15 @@ public:
 		: m_prop(prop), m_vec(vec) {}
 	~RVNGPropertyListElement()
 	{
-		delete m_prop;
-		delete m_vec;
 	}
 	RVNGPropertyListElement &operator=(const RVNGPropertyListElement &elem)
 	{
-		m_prop = elem.m_prop ? elem.m_prop->clone() : nullptr;
-		m_vec = elem.m_vec ? static_cast<RVNGPropertyListVector *>(elem.m_vec->clone()) : nullptr;
+		m_prop.reset(elem.m_prop ? elem.m_prop->clone() : nullptr);
+		m_vec.reset(elem.m_vec ? static_cast<RVNGPropertyListVector *>(elem.m_vec->clone()) : nullptr);
 		return *this;
 	}
-	RVNGProperty *m_prop;
-	RVNGPropertyListVector *m_vec;
+	std::unique_ptr<RVNGProperty> m_prop;
+	std::unique_ptr<RVNGPropertyListVector> m_vec;
 };
 
 class RVNGPropertyListImpl
@@ -147,7 +146,7 @@ const RVNGProperty *RVNGPropertyListImpl::operator[](const char *name) const
 {
 	auto i = m_map.find(name);
 	if (i != m_map.end())
-		return i->second.m_prop;
+		return i->second.m_prop.get();
 	return nullptr;
 }
 
@@ -156,7 +155,7 @@ const RVNGPropertyListVector *RVNGPropertyListImpl::child(const char *name) cons
 	auto i = m_map.find(name);
 	if (i != m_map.end())
 	{
-		return i->second.m_vec;
+		return i->second.m_vec.get();
 	}
 
 	return nullptr;
@@ -167,11 +166,8 @@ void RVNGPropertyListImpl::insert(const char *name, RVNGProperty *prop)
 	auto i = m_map.lower_bound(name);
 	if (i != m_map.end() && !(m_map.key_comp()(name, i->first)))
 	{
-		delete i->second.m_vec;
 		i->second.m_vec = nullptr;
-		RVNGProperty *tmpProp = i->second.m_prop;
-		i->second.m_prop = prop;
-		delete tmpProp;
+		i->second.m_prop.reset(prop);
 		return;
 	}
 	m_map.insert(i, std::map<std::string, RVNGPropertyListElement>::value_type(name, RVNGPropertyListElement(prop, nullptr)));
@@ -182,11 +178,8 @@ void RVNGPropertyListImpl::insert(const char *name, RVNGPropertyListVector *vec)
 	auto i = m_map.lower_bound(name);
 	if (i != m_map.end() && !(m_map.key_comp()(name, i->first)))
 	{
-		delete i->second.m_prop;
 		i->second.m_prop = nullptr;
-		RVNGPropertyListVector *tmpProp = i->second.m_vec;
-		i->second.m_vec = vec;
-		delete tmpProp;
+		i->second.m_vec.reset(vec);
 		return;
 	}
 	m_map.insert(i, std::map<std::string, RVNGPropertyListElement>::value_type(name, RVNGPropertyListElement(nullptr, vec)));
@@ -421,16 +414,16 @@ bool RVNGPropertyListIterImpl::last()
 const RVNGProperty *RVNGPropertyListIterImpl::operator()() const
 {
 	if (m_iter->second.m_prop)
-		return m_iter->second.m_prop;
+		return m_iter->second.m_prop.get();
 	if (m_iter->second.m_vec)
-		return m_iter->second.m_vec;
+		return m_iter->second.m_vec.get();
 	return nullptr;
 }
 
 const RVNGPropertyListVector *RVNGPropertyListIterImpl::child() const
 {
 	if (m_iter->second.m_vec)
-		return m_iter->second.m_vec;
+		return m_iter->second.m_vec.get();
 	return nullptr;
 }
 
