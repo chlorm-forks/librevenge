@@ -180,7 +180,7 @@ public:
 	void load(const unsigned char *buffer, unsigned len)
 	{
 		resize(len / 4);
-		for (unsigned i = 0; i < count(); i++)
+		for (unsigned long i = 0; i < count(); i++)
 			set(i, readU32(buffer + i*4));
 	}
 
@@ -842,7 +842,7 @@ void librevenge::AllocTable::setChain(std::vector<unsigned long> chain, unsigned
 {
 	if (!chain.size()) return;
 
-	for (unsigned i=0; i<chain.size()-1; i++)
+	for (size_t i=0; i<chain.size()-1; i++)
 		set(chain[i], chain[i+1]);
 	set(chain[ chain.size()-1 ], end);
 }

@@ -475,7 +475,7 @@ void RVNGSVGPresentationGenerator::setStyle(const RVNGPropertyList &propList)
 			{
 				m_impl->m_outputSink << "<svg:defs>\n";
 				m_impl->m_outputSink << "  <svg:radialGradient id=\"grad" << m_impl->m_gradientIndex++ << "\" cx=\"" << m_impl->m_style["svg:cx"]->getStr().cstr() << "\" cy=\"" << m_impl->m_style["svg:cy"]->getStr().cstr() << "\" r=\"" << m_impl->m_style["svg:r"]->getStr().cstr() << "\" >\n";
-				for (unsigned c = 0; c < m_impl->m_gradient.count(); c++)
+				for (unsigned long c = 0; c < m_impl->m_gradient.count(); c++)
 				{
 					m_impl->m_outputSink << "    <svg:stop offset=\"" << m_impl->m_gradient[c]["svg:offset"]->getStr().cstr() << "\"";
 
@@ -490,7 +490,7 @@ void RVNGSVGPresentationGenerator::setStyle(const RVNGPropertyList &propList)
 			{
 				m_impl->m_outputSink << "<svg:defs>\n";
 				m_impl->m_outputSink << "  <svg:linearGradient id=\"grad" << m_impl->m_gradientIndex++ << "\" >\n";
-				for (unsigned c = 0; c < m_impl->m_gradient.count(); c++)
+				for (unsigned long c = 0; c < m_impl->m_gradient.count(); c++)
 				{
 					m_impl->m_outputSink << "    <svg:stop offset=\"" << m_impl->m_gradient[c]["svg:offset"]->getStr().cstr() << "\"";
 
@@ -669,7 +669,7 @@ void RVNGSVGPresentationGeneratorImpl::drawPolySomething(const RVNGPropertyListV
 			m_outputSink << "<svg:polyline ";
 
 		m_outputSink << "points=\"";
-		for (unsigned i = 0; i < vertices.count(); i++)
+		for (unsigned long i = 0; i < vertices.count(); i++)
 		{
 			if (!vertices[i]["svg:x"]||!vertices[i]["svg:y"])
 				continue;
@@ -690,7 +690,7 @@ void RVNGSVGPresentationGenerator::drawPath(const RVNGPropertyList &propList)
 		return;
 	m_impl->m_outputSink << "<svg:path d=\" ";
 	bool isClosed = false;
-	unsigned i=0;
+	unsigned long i=0;
 	for (i=0; i < path->count(); i++)
 	{
 		RVNGPropertyList pList((*path)[i]);

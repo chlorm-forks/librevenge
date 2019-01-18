@@ -266,7 +266,7 @@ void RVNGSVGDrawingGeneratorPrivate::drawPolySomething(const RVNGPropertyListVec
 			m_outputSink << "<" << getNamespaceAndDelim() << "polyline ";
 
 		m_outputSink << "points=\"";
-		for (unsigned i = 0; i < vertices.count(); i++)
+		for (unsigned long i = 0; i < vertices.count(); i++)
 		{
 			if (!vertices[i]["svg:x"]||!vertices[i]["svg:y"])
 				continue;
@@ -359,7 +359,7 @@ void RVNGSVGDrawingGeneratorPrivate::setStyle(const RVNGPropertyList &propList)
 			m_outputSink << " >\n";
 			if (m_gradient.count())
 			{
-				for (unsigned c = 0; c < m_gradient.count(); c++)
+				for (unsigned long c = 0; c < m_gradient.count(); c++)
 				{
 					RVNGPropertyList const &grad=m_gradient[c];
 					m_outputSink << "    <" << getNamespaceAndDelim() << "stop";
@@ -397,7 +397,7 @@ void RVNGSVGDrawingGeneratorPrivate::setStyle(const RVNGPropertyList &propList)
 				{
 					// check if we can reconstruct the linear offset, ie. if each offset is a valid percent%
 					canBuildAxial = true;
-					for (unsigned c = 0; c < m_gradient.count(); ++c)
+					for (unsigned long c = 0; c < m_gradient.count(); ++c)
 					{
 						RVNGPropertyList const &grad=m_gradient[c];
 						if (!grad["svg:offset"] || grad["svg:offset"]->getDouble()<0 || grad["svg:offset"]->getDouble() > 1)
@@ -445,7 +445,7 @@ void RVNGSVGDrawingGeneratorPrivate::setStyle(const RVNGPropertyList &propList)
 				}
 				else
 				{
-					for (unsigned c = 0; c < m_gradient.count(); c++)
+					for (unsigned long c = 0; c < m_gradient.count(); c++)
 					{
 						RVNGPropertyList const &grad=m_gradient[c];
 						m_outputSink << "    <" << getNamespaceAndDelim() << "stop";
@@ -853,7 +853,7 @@ void RVNGSVGDrawingGenerator::drawPath(const RVNGPropertyList &propList)
 		return;
 	m_pImpl->m_outputSink << "<" << m_pImpl->getNamespaceAndDelim() << "path d=\" ";
 	bool isClosed = false;
-	unsigned i=0;
+	unsigned long i=0;
 	for (i=0; i < path->count(); i++)
 	{
 		RVNGPropertyList pList((*path)[i]);
