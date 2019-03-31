@@ -155,11 +155,17 @@ class RVNGPropertyListElementPrinter:
         self.typename = typename
         self.value = value
 
-        prop = from_unique_ptr(self.value['m_prop'])
+        def get_pointer(val):
+            if val.type.code == gdb.TYPE_CODE_PTR:
+                return val
+            else:
+                return from_unique_ptr(val)
+
+        prop = get_pointer(self.value['m_prop'])
         if prop:
             self.delegate = gdb.default_visualizer(prop.dereference())
         else:
-            vec = from_unique_ptr(self.value['m_vec'])
+            vec = get_pointer(self.value['m_vec'])
             assert vec
             self.delegate = gdb.default_visualizer(vec.dereference())
 
