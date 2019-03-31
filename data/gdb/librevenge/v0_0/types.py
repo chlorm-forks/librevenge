@@ -17,6 +17,13 @@ import gdb
 import librevenge.util.compatibility as compatibility
 import librevenge.util.printing as printing
 
+def from_unique_ptr(val):
+    try:
+        delegate = gdb.default_visualizer(val)
+        return delegate.pointer
+    except:
+        return val # just show the unique_ptr
+
 class RVNGBinaryDataPrinter:
 
     def __init__(self, typename, value):
@@ -148,12 +155,11 @@ class RVNGPropertyListElementPrinter:
         self.typename = typename
         self.value = value
 
-        prop = self.value['m_prop']
+        prop = from_unique_ptr(self.value['m_prop'])
         if prop:
-            assert prop
             self.delegate = gdb.default_visualizer(prop.dereference())
         else:
-            vec = self.value['m_vec']
+            vec = from_unique_ptr(self.value['m_vec'])
             assert vec
             self.delegate = gdb.default_visualizer(vec.dereference())
 
