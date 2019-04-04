@@ -285,7 +285,7 @@ AC_ARG_ENABLE([pretty-printers],
 AC_ARG_WITH([gdb-data-dir],
 	[AS_HELP_STRING([--with-gdb-data-dir], [Specify gdb data dir])],
 	[gdb_data_dir="$withval"],
-	[gdb_data_dir="/usr/share/gdb"]
+	[gdb_data_dir='${datadir}/gdb']
 )
 AM_CONDITIONAL([BUILD_PRETTY_PRINTERS], [test "x$enable_pretty_printers" != "xno"])
 
