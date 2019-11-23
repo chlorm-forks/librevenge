@@ -139,7 +139,7 @@ public:
 			if (m_magic[i] != s_ole_magic[i]) return false;
 		return true;
 	}
-	bool valid(unsigned long fileSize);
+	bool valid(unsigned long fileSize) const;
 	void load(const unsigned char *buffer, unsigned long size);
 	void save(unsigned char *buffer);
 protected:
@@ -526,9 +526,9 @@ public:
 	{
 		return size >= m_header.m_threshold;
 	}
-	unsigned long loadBigBlocks(std::vector<unsigned long> const &blocks, unsigned char *buffer, unsigned long maxlen);
+	unsigned long loadBigBlocks(std::vector<unsigned long> const &blocks, unsigned char *buffer, unsigned long maxlen) const;
 
-	unsigned long loadBigBlock(unsigned long block, unsigned char *buffer, unsigned long maxlen);
+	unsigned long loadBigBlock(unsigned long block, unsigned char *buffer, unsigned long maxlen) const;
 
 	unsigned long loadSmallBlocks(std::vector<unsigned long> const &blocks, unsigned char *buffer, unsigned long maxlen);
 
@@ -751,7 +751,7 @@ librevenge::Header::Header() :
 	compute_block_size();
 }
 
-bool librevenge::Header::valid(const unsigned long fileSize)
+bool librevenge::Header::valid(const unsigned long fileSize) const
 {
 	if (m_threshold != 4096) return false;
 	// there must be at least the header, one bat sector and one dirent sector in the file
@@ -1272,7 +1272,7 @@ void librevenge::IStorage::load()
 }
 
 unsigned long librevenge::IStorage::loadBigBlocks(std::vector<unsigned long> const &blocks,
-                                                  unsigned char *data, unsigned long maxlen)
+                                                  unsigned char *data, unsigned long maxlen) const
 {
 	// sentinel
 	if (!data) return 0;
@@ -1299,7 +1299,7 @@ unsigned long librevenge::IStorage::loadBigBlocks(std::vector<unsigned long> con
 }
 
 unsigned long librevenge::IStorage::loadBigBlock(unsigned long block,
-                                                 unsigned char *data, unsigned long maxlen)
+                                                 unsigned char *data, unsigned long maxlen) const
 {
 	// sentinel
 	if (!data) return 0;
