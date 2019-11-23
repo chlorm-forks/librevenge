@@ -211,7 +211,7 @@ void RVNGHTMLTextParagraphStyleManager::send(std::ostream &out)
 	}
 }
 
-std::string RVNGHTMLTextParagraphStyleManager::getContent(RVNGPropertyList const &pList, bool isList) const
+std::string RVNGHTMLTextParagraphStyleManager::getContent(RVNGPropertyList const &pList, bool isList)
 {
 	std::stringstream s;
 	if (pList["fo:text-align"])
@@ -279,7 +279,7 @@ std::string RVNGHTMLTextParagraphStyleManager::getContent(RVNGPropertyList const
 	return s.str();
 }
 
-void RVNGHTMLTextParagraphStyleManager::parseBorders(RVNGPropertyList const &pList, std::ostream &out) const
+void RVNGHTMLTextParagraphStyleManager::parseBorders(RVNGPropertyList const &pList, std::ostream &out)
 {
 	static char const *type[] = {"border", "border-left", "border-top", "border-right", "border-bottom" };
 	for (int i = 0; i < 5; i++)
@@ -342,7 +342,7 @@ void RVNGHTMLTextSpanStyleManager::send(std::ostream &out)
 	}
 }
 
-std::string RVNGHTMLTextSpanStyleManager::getContent(RVNGPropertyList const &pList) const
+std::string RVNGHTMLTextSpanStyleManager::getContent(RVNGPropertyList const &pList)
 {
 	std::stringstream s;
 	s << "{\n";
@@ -412,7 +412,7 @@ std::string RVNGHTMLTextSpanStyleManager::getContent(RVNGPropertyList const &pLi
 	return s.str();
 }
 
-void RVNGHTMLTextSpanStyleManager::parseDecorations(RVNGPropertyList const &pList, std::ostream &out) const
+void RVNGHTMLTextSpanStyleManager::parseDecorations(RVNGPropertyList const &pList, std::ostream &out)
 {
 	// replaceme by text-decoration-line when its implementation will appear in browser
 	std::stringstream s;
@@ -427,7 +427,7 @@ void RVNGHTMLTextSpanStyleManager::parseDecorations(RVNGPropertyList const &pLis
 		out << " text-decoration:" << s.str() << ";";
 }
 
-void RVNGHTMLTextSpanStyleManager::parseTextPosition(char const *value, std::ostream &out) const
+void RVNGHTMLTextSpanStyleManager::parseTextPosition(char const *value, std::ostream &out)
 {
 	if (!value) return;
 	// first try to retrieve the position

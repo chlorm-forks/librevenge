@@ -62,7 +62,7 @@ struct RVNGHTMLTextZone
 	//! returns a new stream corresponding to this zone
 	RVNGHTMLTextStream *getNewStream();
 	//! delete a stream corresponding to this zone
-	void deleteStream(RVNGHTMLTextStream *stream);
+	static void deleteStream(RVNGHTMLTextStream *stream);
 	//! returns true if there is no data
 	bool isEmpty() const
 	{

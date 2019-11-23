@@ -58,7 +58,7 @@ private:
 	//! convert a property list in a html content string
 	std::string getCellContent(RVNGPropertyList const &pList) const;
 	//! convert a property list in a html content string
-	std::string getRowContent(RVNGPropertyList const &pList) const;
+	static std::string getRowContent(RVNGPropertyList const &pList);
 	//! try to return the col width
 	bool getColumnsWidth(int i, int numSpanned, double &w) const;
 	//! a map cell content -> name

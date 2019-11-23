@@ -183,7 +183,7 @@ std::string RVNGHTMLTextTableStyleManager::getCellContent(RVNGPropertyList const
 	return s.str();
 }
 
-std::string RVNGHTMLTextTableStyleManager::getRowContent(RVNGPropertyList const &pList) const
+std::string RVNGHTMLTextTableStyleManager::getRowContent(RVNGPropertyList const &pList)
 {
 	std::stringstream s;
 	s << "{\n";

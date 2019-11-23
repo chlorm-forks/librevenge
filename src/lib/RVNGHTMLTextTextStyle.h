@@ -52,13 +52,13 @@ public:
 	void send(std::ostream &out);
 protected:
 	//! convert a property list in a html content string
-	std::string getContent(RVNGPropertyList const &pList, bool isList) const;
+	static std::string getContent(RVNGPropertyList const &pList, bool isList);
 	//! a map content -> name
 	std::map<std::string, std::string> m_contentNameMap;
 	//! a map id -> name
 	std::map<int, std::string> m_idNameMap;
 	//! add data corresponding to the border
-	void parseBorders(RVNGPropertyList const &pList, std::ostream &out) const;
+	static void parseBorders(RVNGPropertyList const &pList, std::ostream &out);
 private:
 	RVNGHTMLTextParagraphStyleManager(RVNGHTMLTextParagraphStyleManager const &orig);
 	RVNGHTMLTextParagraphStyleManager operator=(RVNGHTMLTextParagraphStyleManager const &orig);
@@ -153,11 +153,11 @@ public:
 	void send(std::ostream &out);
 protected:
 	//! convert a property list in a html content string
-	std::string getContent(RVNGPropertyList const &pList) const;
+	static std::string getContent(RVNGPropertyList const &pList);
 	//! add data corresponding to a text position in out
-	void parseTextPosition(char const *value, std::ostream &out) const;
+	static void parseTextPosition(char const *value, std::ostream &out);
 	//! add data corresponding to the line decoration
-	void parseDecorations(RVNGPropertyList const &pList, std::ostream &out) const;
+	static void parseDecorations(RVNGPropertyList const &pList, std::ostream &out);
 	//! a map content -> name
 	std::map<std::string, std::string> m_contentNameMap;
 	//! a map id -> name
