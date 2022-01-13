@@ -705,9 +705,14 @@ void RVNGSVGDrawingGenerator::startPage(const RVNGPropertyList &propList)
 	m_pImpl->m_outputSink << (m_pImpl->m_nmSpace.empty() ? "" : ":") << m_pImpl->m_nmSpace << "=\"http://www.w3.org/2000/svg\" ";
 	m_pImpl->m_outputSink << "xmlns:xlink=\"http://www.w3.org/1999/xlink\" ";
 	if (propList["svg:width"])
-		m_pImpl->m_outputSink << "width=\"" << doubleToString(72*getInchValue(*propList["svg:width"])) << "\" ";
+		m_pImpl->m_outputSink << "width=\"" << doubleToString(getInchValue(*propList["svg:width"])) << "in\" ";
 	if (propList["svg:height"])
-		m_pImpl->m_outputSink << "height=\"" << doubleToString(72*getInchValue(*propList["svg:height"])) << "\"";
+		m_pImpl->m_outputSink << "height=\"" << doubleToString(getInchValue(*propList["svg:height"])) << "in\" ";
+	if (propList["svg:width"] && propList["svg:height"])
+	{
+		m_pImpl->m_outputSink << "viewBox=\"0 0 " << doubleToString(72*getInchValue(*propList["svg:width"]));
+		m_pImpl->m_outputSink << " " << doubleToString(72*getInchValue(*propList["svg:height"])) << "\"";
+	}
 	m_pImpl->m_outputSink << " >\n";
 }
 
